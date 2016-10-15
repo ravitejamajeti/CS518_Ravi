@@ -1,0 +1,15 @@
+          .container {
+                position: relative;
+                top: 20px;
+                border-radius: 5px;
+                box-shadow: 0 0 6px #ccc;
+                padding: 15px 15px 15px 15px
+            }
+
+.black-background {background-color:#000000;}
+
+.white {color:#ffffff;}
+
+.btn:focus {
+  outline: none;
+}
