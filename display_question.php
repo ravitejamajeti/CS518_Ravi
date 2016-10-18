@@ -31,7 +31,15 @@
             $query = "SELECT * from questions where qid = '".$_GET['qid']."'";
             
             if($result = mysqli_query($link, $query)) {
+                
+                $num_rows = mysqli_num_rows($result);
+                
+                if($num_rows < 1) {
+                    header("Location: index.php");
+                }
+                
                 $row = mysqli_fetch_array($result);
+                
                 $qnd_user = $row['qnd_user'];
                     echo "<h4>".$row['question_title']."</h4>";
                     echo "<hr width = '83%'>";
