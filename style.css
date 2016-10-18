@@ -3,13 +3,43 @@
                 top: 20px;
                 border-radius: 5px;
                 box-shadow: 0 0 6px #ccc;
-                padding: 15px 15px 15px 15px
+                padding: 15px 15px 15px 15px;
+                width: 800px;
             }
 
 .black-background {background-color:#000000;}
+
+.green {color:limegreen;}
+
+.nav-background {background-color:#3B5998;}
 
 .white {color:#ffffff;}
 
 .btn:focus {
   outline: none;
+}
+
+hr {
+    
+    margin-top: 0.5em;
+    margin-bottom: 15px;
+    margin-left: auto;
+    margin-right: auto;
+    
+    border: 0;
+    height: 1px;
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
+}
+
+.asked_by {
+    color: grey;
+}
+
+.nav1 {
+    position: relative;
+    left: 400px;
+}
+
+.disp_none {
+    display: none;
 }
