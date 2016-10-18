@@ -34,6 +34,30 @@ if (isset($_SESSION['username'])) {
     <body>
         
         <?php include 'navbar.php'; ?>
+        
+        <?php
+        
+        $posted = true;
+        
+            include 'db_connect.php';
+            
+            if($_POST) {
+
+                $query = "INSERT INTO questions (question, question_title, qnd_user, views, q_created) VALUES ('".mysqli_real_escape_string($link, $_POST['summernote'])."', '".mysqli_real_escape_string($link, $_POST['question_title'])."', '".mysqli_real_escape_string($link, $_SESSION['username'])."', 0, now())";
+
+                $result = mysqli_query($link, $query);
+                
+                if($result) {
+                    $posted = true;
+                }
+                else{
+                    $posted = false;
+                }
+                    
+            
+            }
+            
+        ?>
     
         <div class="container">
     
@@ -57,32 +81,13 @@ if (isset($_SESSION['username'])) {
                     <div id="question_errors" style="color:red"></div>
                     <br>
                     <button type="submit" class="btn btn-primary nav-background white">Submit</button>
+                    <br>
+                    <div style="color:green"><?php if($_POST) {if($posted == true) { echo "Question Submitted Successfully"; } }?> </div>
                 </div>
             </form>
                     
         </div>
             
-         <?php
-        
-            include 'db_connect.php';
-            
-            if($_POST) {
-
-                $query = "INSERT INTO questions (question, question_title, qnd_user, views, q_created) VALUES ('".mysqli_real_escape_string($link, $_POST['summernote'])."', '".mysqli_real_escape_string($link, $_POST['question_title'])."', '".mysqli_real_escape_string($link, $_SESSION['username'])."', 0, now())";
-
-                $result = mysqli_query($link, $query);
-                
-                /*if($result) {
-                    echo "Success";
-                }
-                else{
-                    print_r($result);
-                }*/
-                    
-            
-            }
-            
-        ?>
         <script>
             document.getElementById("ask").style.backgroundColor = "white";
             document.getElementById("ask").style.color = "steelblue";
