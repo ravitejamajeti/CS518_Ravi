@@ -59,8 +59,10 @@
             mysqli_query($link, $query);
         ?>
             
-        <br>
+        
         <div id="answer_list">
+            <div><h3>Answers</h3></div>
+            <hr>
 
         <?php
             $marked = false;
