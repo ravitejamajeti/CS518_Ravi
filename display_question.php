@@ -149,13 +149,17 @@
                 
                     if(markedid == str){
                         marked = false
+                        $.post('./unmark_answer.php', {'markedid': str, 'qid': qid}, function(response) {
+                        });
                     }
                     else {
                         document.getElementById(str).setAttribute('class','fa fa-check fa-2x col-sm-1 green')
+                        $.post('./mark_answer.php', {'markedid': str, 'qid': qid}, function(response) {
+                        });
                     }
                     
-                    $.post('./mark_answer.php', {'markedid': str, 'qid': qid}, function(response) {
-                    });
+                    //$.post('./mark_answer.php', {'markedid': str, 'qid': qid}, function(response) {
+                    //});
                 }
             }   
             
