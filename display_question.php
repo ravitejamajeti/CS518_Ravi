@@ -45,6 +45,10 @@
                     echo "</div>";
                     echo "<hr>";
             }
+            
+            $query = "update questions set views = views + 1 where qid = '".$_GET['qid']."'";
+            
+            mysqli_query($link, $query);
         ?>
             
         <br>
@@ -67,6 +71,9 @@
                         echo "<div class='row'>";
                         echo "<div class='col-sm-4 col-sm-offset-8'><span class='asked_by'>answered by </span><a href=''>".htmlentities($row['answered_user'])."</a></div>";
                         echo "</div>";
+                        echo "<div class='row'>";
+                    echo "<div class='col-sm-4 col-sm-offset-8 asked_by'><span class='asked_by'><i class='fa fa-clock-o' aria-hidden='true'></i> on </span>".$row['a_created']."</div>";
+                    echo "</div>";
                         echo "<hr width = '83%'>";
                     }
                     else {
@@ -90,6 +97,9 @@
                         echo "<br><br>";
                         echo "<div class='row'>";
                         echo "<div class='col-sm-4 col-sm-offset-8'><span class='asked_by'>answered by </span><a href=''>".htmlentities($row['answered_user'])."</a></div>";
+                        echo "</div>";
+                        echo "<div class='row'>";
+                        echo "<div class='col-sm-4 col-sm-offset-8 asked_by'><span class='asked_by'><i class='fa fa-clock-o' aria-hidden='true'></i> on </span>".$row['a_created']."</div>";
                         echo "</div>";
                         echo "<hr width = '83%'>";
                     } 
@@ -157,16 +167,20 @@
                         if(response){
                             var qnd_user =  "<?php echo $qnd_user; ?>";
                             var session_user =  "<?php echo $_SESSION['username']; ?>";
+                            
+                            console.log(response['aid'])
 
                             if(qnd_user == session_user) {
-                                iDiv.innerHTML = "<div class='row'><span><i class='fa fa-check fa-2x col-sm-1' aria-hidden='true' onclick='changetick(this.id)'></i></span><span class='col-sm-11'>"+answer+"</div><br><br><div class='row'><div class='col-sm-4 col-sm-offset-8'><span class='asked_by'>answered by </span><a href=''>"+htmlEntities(response['username'])+"</a></div></div><hr width = '83%'>"
+                                iDiv.innerHTML = "<div class='row'><span><i id = "+response['aid']+" class='fa fa-check fa-2x col-sm-1' aria-hidden='true' onclick='changetick(this.id)'></i></span><span class='col-sm-11'>"+answer+"</div><br><br><div class='row'><div class='col-sm-4 col-sm-offset-8'><span class='asked_by'>answered by </span><a href=''>"+htmlEntities(response['username'])+"</a></div></div><div class='row'><div class='col-sm-4 col-sm-offset-8 asked_by'><span class='asked_by'><i class='fa fa-clock-o' aria-hidden='true'></i> now </span></div></div><hr width = '83%'>"
                             }
                             else {
-                                iDiv.innerHTML = "<div class='row'><span class = 'disp_none'><i class='fa fa-check fa-2x col-sm-1' aria-hidden='true' onclick='changetick(this.id)'></i></span><span class='col-sm-1'></span><span class='col-sm-11'>"+answer+"</div><br><br><div class='row'><div class='col-sm-4 col-sm-offset-8'><span class='asked_by'>answered by </span><a href=''>"+htmlEntities(response['username'])+"</a></div></div><hr width = '83%'>"
+                                iDiv.innerHTML = "<div class='row'><span class = 'disp_none'><i id = "+response['aid']+" class='fa fa-check fa-2x col-sm-1' aria-hidden='true' onclick='changetick(this.id)'></i></span><span class='col-sm-1'></span><span class='col-sm-11'>"+answer+"</div><br><br><div class='row'><div class='col-sm-4 col-sm-offset-8'><span class='asked_by'>answered by </span><a href=''>"+htmlEntities(response['username'])+"</a></div></div><div class='row'><div class='col-sm-4 col-sm-offset-8 asked_by'><span class='asked_by'><i class='fa fa-clock-o' aria-hidden='true'></i> now </span></div></div><hr width = '83%'>"
                             }
                         }
                     }, 'json');
                 }
+                
+                $('#summernote').summernote('code','')
             }
             
             $(".btn").mouseup(function(){
@@ -179,4 +193,5 @@
     </body>
 
 </html>
+
 

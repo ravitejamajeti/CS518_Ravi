@@ -3,10 +3,9 @@
 include 'config.php';
 
 if (isset($_SESSION['username'])) {
-    echo "Welcome to the member's area, " . $_SESSION['username'] . "!";
 } else {
     echo "Please log in first to see this page.";
-    header("Location: login.php");
+    header("Location: samplogin.php");
 }
 
 ?>
@@ -26,6 +25,8 @@ if (isset($_SESSION['username'])) {
                 height: 200
             });
         });
+        
+        
         </script>
         
     </head>
@@ -67,21 +68,26 @@ if (isset($_SESSION['username'])) {
             
             if($_POST) {
 
-                $query = "INSERT INTO questions (question, question_title, qnd_user) VALUES ('".mysqli_real_escape_string($link, $_POST['summernote'])."', '".mysqli_real_escape_string($link, $_POST['question_title'])."', '".mysqli_real_escape_string($link, $_SESSION['username'])."')";
+                $query = "INSERT INTO questions (question, question_title, qnd_user, views, q_created) VALUES ('".mysqli_real_escape_string($link, $_POST['summernote'])."', '".mysqli_real_escape_string($link, $_POST['question_title'])."', '".mysqli_real_escape_string($link, $_SESSION['username'])."', 0, now())";
 
                 $result = mysqli_query($link, $query);
                 
-                if($result) {
+                /*if($result) {
                     echo "Success";
                 }
                 else{
                     print_r($result);
-                }
+                }*/
                     
             
             }
             
         ?>
+        <script>
+            document.getElementById("ask").style.backgroundColor = "white";
+            document.getElementById("ask").style.color = "steelblue";
         
+        </script>
     </body>
+    <div class="footer"></div>
 </html>

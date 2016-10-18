@@ -1,17 +1,24 @@
-          .container {
+body {
+    background:url(bg.jpg),repeating-linear-gradient(steelblue,white);
+     background-size: 6000px 10px,6000px 500px;
+    background-repeat: no-repeat,no-repeat;
+
+}         
+.container {
                 position: relative;
                 top: 20px;
                 border-radius: 5px;
                 box-shadow: 0 0 6px #ccc;
                 padding: 15px 15px 15px 15px;
                 width: 800px;
+                background-color: white;
             }
 
 .black-background {background-color:#000000;}
 
 .green {color:limegreen;}
 
-.nav-background {background-color:#3B5998;}
+.nav-background {background-color:#4682B4;}
 
 .white {color:#ffffff;}
 
@@ -47,3 +54,12 @@ hr {
 .red-tooltip + .tooltip > .tooltip-inner {background-color: whitesmoke;}
 .red-tooltip + .tooltip > .tooltip-inner {color: black; max-width: 550px;}
 .red-tooltip + .tooltip > .tooltip-arrow { border-bottom-color:#f00; }
+
+a.logo:hover {
+    color: white;
+}
+
+.footer {
+    background-color: #4682B4;
+    margin-top: 50px;
+}

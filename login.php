@@ -14,10 +14,13 @@
         <style>
 
             .containerlogin {
-                width: 400px;
-                height: 222px;
-                border: 5px solid grey;
-                border-radius: 5%;
+                position: relative;
+                top: 200px;
+                left: 500px;
+                border-radius: 5px;
+                box-shadow: 0 0 6px #ccc;
+                padding: 15px 15px 15px 15px;
+                width: 25%;
             }
     
         </style>
