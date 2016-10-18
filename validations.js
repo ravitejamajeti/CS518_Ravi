@@ -30,9 +30,6 @@ function validate_question() {
 
         question_title = document.forms["question_post"]["question_title"].value
         
-                    document.getElementById("question_errors").innerHTML = "Question Title field cannot be empty"
-        
-            
                 if(question_title.length < 10) {
                     document.getElementById("question_errors").innerHTML = "Question Title cannot be less than 10 characters"
                     return false
@@ -40,7 +37,7 @@ function validate_question() {
         
                 x = question_title.trim()
                 if (x == null || x == "" || x == " ") {
-                    console.log("len is ",question_title.length)
+                    document.getElementById("question_errors").innerHTML = "Question Title field cannot be empty"
                     return false;
                 }
         
