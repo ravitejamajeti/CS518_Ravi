@@ -43,3 +43,7 @@ hr {
 .disp_none {
     display: none;
 }
+
+.red-tooltip + .tooltip > .tooltip-inner {background-color: whitesmoke;}
+.red-tooltip + .tooltip > .tooltip-inner {color: black; max-width: 550px;}
+.red-tooltip + .tooltip > .tooltip-arrow { border-bottom-color:#f00; }

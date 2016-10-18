@@ -18,6 +18,15 @@ if (isset($_SESSION['username'])) {
         <title>Ask your Question</title>
         
         <?php include 'header.php' ?>
+        <script src="validations.js"></script>
+        
+        <script>
+        $(document).ready(function() {
+            $('#summernote').summernote({
+                height: 200
+            });
+        });
+        </script>
         
     </head>
     
@@ -27,7 +36,7 @@ if (isset($_SESSION['username'])) {
     
         <div class="container">
     
-            <form> 
+            <form method="post" onsubmit="return validate_question()" name="question_post"> 
                 <div class="form-group">
                     <label for="question_title">Title of Question</label>
                         <div class="row">
@@ -40,9 +49,11 @@ if (isset($_SESSION['username'])) {
                     <label for="question_content">Description of Question</label>
                     <div class="row">
                         <div class="col-sm-10">
-                            <textarea class="form-control" name="question_content" style="height: 100px"></textarea>
+                            <!--<textarea class="form-control" name="question_content" style="height: 100px"></textarea>-->
+                            <textarea id="summernote" name="summernote"></textarea>
                         </div>
                     </div>
+                    <div id="question_errors" style="color:red"></div>
                     <br>
                     <button type="submit" class="btn btn-primary nav-background white">Submit</button>
                 </div>
@@ -54,11 +65,19 @@ if (isset($_SESSION['username'])) {
         
             include 'db_connect.php';
             
-            if($_GET) {
+            if($_POST) {
 
-                $query = "INSERT INTO questions (question, question_title, qnd_user) VALUES ('".$_GET['question_content']."', '".$_GET['question_title']."', '".$_SESSION['username']."')";
+                $query = "INSERT INTO questions (question, question_title, qnd_user) VALUES ('".mysqli_real_escape_string($link, $_POST['summernote'])."', '".mysqli_real_escape_string($link, $_POST['question_title'])."', '".mysqli_real_escape_string($link, $_SESSION['username'])."')";
 
-                mysqli_query($link, $query);    
+                $result = mysqli_query($link, $query);
+                
+                if($result) {
+                    echo "Success";
+                }
+                else{
+                    print_r($result);
+                }
+                    
             
             }
             

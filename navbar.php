@@ -16,10 +16,11 @@
               <ul class="nav navbar-nav navbar-right">
                   <?php
                       if (!isset($_SESSION['username'])) {?>
-                        <li id='signup'><a href='#' class='white'><span class='glyphicon glyphicon-user'></span> Sign Up</a></li>
+                        <li id='signup'><a href='#' class='white'><span class='glyphicon glyphicon-user'></span> Sign Up </a></li>
                         <li><a href='login.php' class='white'><span class='glyphicon glyphicon-log-in'></span> Login</a></li>
                     <?php  }
                       else {?>
+                        <li id='signup'><a href='#' class='white'><span class='glyphicon glyphicon-user'></span> <?php echo $_SESSION['username'];?> </a></li>
                         <li><a href='logout.php' class='white'><span class='glyphicon glyphicon-log-in'></span> Logout</a></li>
                      <?php }
                   ?>

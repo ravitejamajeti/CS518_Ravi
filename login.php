@@ -3,6 +3,8 @@
 
 <html lang="en">
     
+    <?php include 'config.php'; ?>
+    
     <head>
       
         <meta charset="utf-8">      
@@ -23,8 +25,16 @@
         <script>
             function validateForm() {
                 var x = document.forms["myForm"]["loginid"].value;
-                if (x == null || x == "") {
-                    alert("Name must be filled out");
+                x = x.trim()
+                if (x == null || x == "" || x == " ") {
+                    alert("Login must be filled out");
+                    return false;
+                }
+                
+                x = document.forms["myForm"]["password"].value;
+                x = x.trim()
+                if (x == null || x == "" || x == " ") {
+                    alert("Password must be filled out");
                     return false;
                 }
             }
@@ -59,14 +69,14 @@
         <?php
 
             include 'db_connect.php';
-            include 'config.php';
+            
 
             if($_POST)
             {
-                echo "Userid entered is : ".$_POST['loginid'];
-                echo "Password entered is : ".$_POST['password'];
+                //echo "Userid entered is : ".$_POST['loginid'];
+                //echo "Password entered is : ".$_POST['password'];
 
-                $query = "SELECT * FROM users where user_name = '".$_POST['loginid']."' and password = '".$_POST['password']."'";
+                $query = "SELECT * FROM users where user_name = '".mysqli_real_escape_string($link, $_POST['loginid'])."' and password = '".mysqli_real_escape_string($link, $_POST['password'])."'";
 
                 if($result = mysqli_query($link, $query))
                 {
@@ -82,6 +92,7 @@
                         header("Location: ask_question.php");
                     }
                 }
+                echo "Invalid username or password";  
             }
 
         ?>
