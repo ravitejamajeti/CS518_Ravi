@@ -28,7 +28,7 @@
                     while($row = mysqli_fetch_array($result)) {
                         echo "<div class='row'>";
                         echo "<div class ='col-sm-1'><i class='fa fa-eye' aria-hidden='true'><span style='color: dark grey'>Views<p class = 'col-sm-6'>".$row['views']."</p></span></i></div>";
-                        echo "<a href='display_question.php?qid=".$row['qid']."' rel='tooltip' data-html='true' title = '' onmouseover='answer_tooltip(this.id)' id = '".$row['qid']."' class = 'question_hyperlink col-sm-11 red-tooltip'>".$row['question_title']."</a>";
+                        echo "<a href='display_question.php?qid=".$row['qid']."' rel='tooltip' data-html='true' title = '' onmouseover='answer_tooltip(this.id)' id = '".$row['qid']."' class = 'question_hyperlink col-sm-11 red-tooltip'>".htmlentities($row['question_title'])."</a>";
                         echo "</div>";
                         echo "<br><br>";
                         echo "<div class='row'>";

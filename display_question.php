@@ -41,7 +41,7 @@
                 $row = mysqli_fetch_array($result);
                 
                 $qnd_user = $row['qnd_user'];
-                    echo "<h4>".$row['question_title']."</h4>";
+                    echo "<h4>".htmlentities($row['question_title'])."</h4>";
                     echo "<hr width = '83%'>";
                     echo "<div class='row'>";
                     echo "<span class='col-sm-1'><i class='fa fa-star-o fa-2x' aria-hidden='true'></i></span>";
