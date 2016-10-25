@@ -16,7 +16,7 @@
             
             <h3>Recent Questions</h3>
             <hr>
-            <br><br>
+            <br>
 
             <?php
 
@@ -25,20 +25,34 @@
                 $query = "SELECT * from questions";
 
                 if($result = mysqli_query($link, $query)) {
-                    while($row = mysqli_fetch_array($result)) {
-                        echo "<div class='row'>";
-                        echo "<div class ='col-sm-1'><i class='fa fa-eye' aria-hidden='true'><span style='color: dark grey'>Views<p class = 'col-sm-6'>".$row['views']."</p></span></i></div>";
-                        echo "<a href='display_question.php?qid=".$row['qid']."' rel='tooltip' data-html='true' title = '' onmouseover='answer_tooltip(this.id)' id = '".$row['qid']."' class = 'question_hyperlink col-sm-11 red-tooltip'>".htmlentities($row['question_title'])."</a>";
-                        echo "</div>";
-                        echo "<br><br>";
-                        echo "<div class='row'>";
-                        echo "<div class='col-sm-4 col-sm-offset-8'><span class='asked_by'><i class='fa fa-user' aria-hidden='true'></i> asked by </span><a href=''>".$row['qnd_user']."</a></div>";
-                        echo "</div>";
-                        echo "<div class='row'>";
-                        echo "<div class='col-sm-4 col-sm-offset-8 asked_by'><span class='asked_by'><i class='fa fa-clock-o' aria-hidden='true'></i> on </span>".$row['q_created']."</div>";
-                        echo "</div>";
-                        echo "<hr>";
-                    }
+                    while($row = mysqli_fetch_array($result)) { ?>
+                    
+                        <div class='row'>
+                        <div class ='col-md-1'>
+                        <span style="background-color: #4682B4; color:white; text-align: center;  border-radius: 3px; box-shadow: 0 0 6px #ccc;">Views</span><br>
+                        <span style="position:relative; left:10px;"> <?php echo $row['views']; ?></span>
+                        </div>
+                        <div class ='col-md-1'>
+                        <span style="background-color: #4682B4; color:white; text-align: center;  border-radius: 3px; box-shadow: 0 0 6px #ccc;">Votes</span><br>
+                        <span style="position:relative; left:10px;"> <?php echo $row['views']; ?></span>
+                        </div>
+                        <div class ='col-md-1'>
+                        <span style="background-color: #4682B4; color:white; text-align: center;  border-radius: 3px; box-shadow: 0 0 6px #ccc;">Answers</span><br>
+                        <span style="position:relative; left:10px;"> <?php echo $row['views']; ?></span>
+                        </div>
+                        <a href="display_question.php?qid= <?php echo $row['qid']; ?> "rel="tooltip" data-html="true" title = "" onmouseover="answer_tooltip(this.id)" class = "question_hyperlink col-md-9 red-tooltip" id = "<?php echo $row['qid']; ?>" > <?php echo htmlentities($row['question_title']); ?></a>
+                        </div>
+                        <br><br>
+                        <div class="row">
+                        <div class="col-sm-4 col-sm-offset-8"><span class="asked_by"><i class="fa fa-user" aria-hidden="true"></i> asked by </span><a href=""> <?php echo $row['qnd_user'];  ?></a></div>
+                        </div>
+                        <div class="row">
+                        <div class="col-sm-4 col-sm-offset-8 asked_by"><span class="asked_by"><i class="fa fa-clock-o" aria-hidden="true"></i> on </span>
+                        <?php echo $row['q_created']; ?> </div>
+                        </div>
+                        <hr>
+                        
+                    <?php }
                 }
             ?>
         </div>

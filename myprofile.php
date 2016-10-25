@@ -11,10 +11,16 @@
     <body>
         
         <?php include 'config.php'; include 'navbar.php'; ?>
-        
+        <div class="container">
+            <div class="row">
+                <div class ='col-md-4'>Picture</div>
+                <div class ='col-md-8 prof_details'>Username</div>
+            </div>
+        </div>
+        <br>
         <div class="container">
             
-            <h3>Asked Questions</h3>
+            <h3>My Questions</h3>
             <hr>
             <br><br>
 
@@ -71,9 +77,6 @@
                     console.log(response)
                 })
             }
-            
-            document.getElementById("my_question").style.backgroundColor = "white";
-            document.getElementById("my_question").style.color = "steelblue";
             
         </script>
         

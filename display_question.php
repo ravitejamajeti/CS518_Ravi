@@ -44,7 +44,7 @@
                     echo "<h4>".htmlentities($row['question_title'])."</h4>";
                     echo "<hr width = '83%'>";
                     echo "<div class='row'>";
-                    echo "<span class='col-sm-1'><i class='fa fa-star-o fa-2x' aria-hidden='true'></i></span>";
+                    echo "<span class='col-sm-1'><i class='fa fa-star-o fa-2x' aria-hidden='true'></i><br><br><i class='fa fa-2x fa-arrow-circle-o-up' aria-hidden='true'></i><br>20<br><i class='fa fa-2x fa-arrow-circle-o-down' aria-hidden='true'></i></span>";
                     echo "<div class='col-sm-11'>".$row['question']."</div>";
                     echo "</div>";
                     echo "<br><br>";
