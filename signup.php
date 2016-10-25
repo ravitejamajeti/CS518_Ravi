@@ -211,7 +211,7 @@ hr{
             <form class="form-signin" method="post" onsubmit="return validateForm()">
                 <span id="reauth-email" class="reauth-email"></span>
                 <p class="input_title">Enter Your Email</p>
-                <input type="text" id="inputEmail" class="login_box" placeholder="username" name="email" required autofocus>
+                <input type="text" id="inputEmail" class="login_box" placeholder="email" name="email" required autofocus>
                 <p class="input_title">Create Username</p>
                 <input type="text" id="inputEmail" class="login_box" placeholder="username" name="loginid" required autofocus>
                 <p class="input_title">Create Password</p>
