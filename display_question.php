@@ -43,8 +43,6 @@
                 $upvote = 0;
                     $downvote = 0;
                 
-                $loggedin = 1;
-                
                 if(isset($_SESSION['username'])) {
                 
                 $query = "SELECT * from question_votes where qid = '".$_GET['qid']."' and uid = '".$_SESSION['uid']."'";
@@ -66,11 +64,10 @@
                     $downvote = 0;
                 }
                 }
-                else {
-                    $loggedin = 0;
-                }
                 
                 $qnd_user = $row['qnd_user']; ?>
+            
+                    <?php if(isset($_SESSION['username'])) { ?>
             
                     <h4> <?php echo htmlentities($row['question_title']) ?> </h4> 
                     <hr width = '83%'>
@@ -90,6 +87,29 @@
                             <div class='col-sm-3'><span class='asked_by'>asked by </span><a href='profile.php?uname=<?php echo htmlentities($row['qnd_user']) ?>'> <?php echo htmlentities($row['qnd_user']) ?> </a><br><span class='asked_by'><i class='fa fa-clock-o' aria-hidden='true'></i> on <?php echo htmlentities($row['q_created']) ?></span></div>
                         </div>
                         <hr>
+            
+                    <?php } else { ?>
+            
+                    <h4> <?php echo htmlentities($row['question_title']) ?> </h4> 
+                    <hr width = '83%'>
+                    <div class='row'>
+                        <?php if($upvote == 0 && $downvote == 0) { ?>
+                        <span class='col-sm-1'><i class='fa fa-star-o fa-2x' aria-hidden='true'></i><br><br><i class='fa fa-2x fa-arrow-circle-o-up' aria-hidden='true' vote_type = 'uq' voted = '<?php echo $upvote; ?>' ></i><br><span id="qvotes"><?php echo $row['votes']; ?></span><br><i class='fa fa-2x fa-arrow-circle-o-down' aria-hidden='true' vote_type = 'dq' voted = '<?php echo $downvote; ?>'></i></span>
+                        <?php } else if($upvote == 1 && $downvote == 0) { ?>
+                        <span class='col-sm-1'><i class='fa fa-star-o fa-2x' aria-hidden='true'></i><br><br><i class='fa fa-2x fa-arrow-circle-o-up green' aria-hidden='true' vote_type = 'uq' voted = '<?php echo $upvote; ?>'></i><br><span id="qvotes"><?php echo $row['votes']; ?></span><br><i class='fa fa-2x fa-arrow-circle-o-down' aria-hidden='true' vote_type = 'dq' voted = '<?php echo $downvote; ?>' ></i></span>
+                        <?php } else if($upvote == 0 && $downvote == 1) { ?>
+                        <span class='col-sm-1'><i class='fa fa-star-o fa-2x' aria-hidden='true'></i><br><br><i class='fa fa-2x fa-arrow-circle-o-up' aria-hidden='true' vote_type = 'uq' voted = '<?php echo $upvote; ?>'></i><br><span id="qvotes"><?php echo $row['votes']; ?></span><br><i class='fa fa-2x fa-arrow-circle-o-down green' aria-hidden='true' vote_type = 'dq' voted = '<?php echo $downvote; ?>' ></i></span>
+                        <?php } ?>
+                    <div class='col-sm-11'> <?php echo $row['question']; ?> </div>
+                    </div>
+                    <br><br>
+                    <div class='row'>
+                        <div class='col-sm-1 col-sm-offset-8'><img width='60' height='45' src='./uploads/<?php echo htmlentities($row['qnd_user']) ?>' onerror= 'this.src="./uploads/defaultIcon.png";' /> </div>
+                            <div class='col-sm-3'><span class='asked_by'>asked by </span><a href='profile.php?uname=<?php echo htmlentities($row['qnd_user']) ?>'> <?php echo htmlentities($row['qnd_user']) ?> </a><br><span class='asked_by'><i class='fa fa-clock-o' aria-hidden='true'></i> on <?php echo htmlentities($row['q_created']) ?></span></div>
+                        </div>
+                        <hr>
+            
+                    <?php } ?>
             <?php
             }
             
@@ -143,7 +163,7 @@
                     }
                         
                     }
-                    
+                    if(isset($_SESSION['username'])) {
                     if($row['marked'] == 1) {
                         $marked = true;
                         echo "<div class='row'>";
@@ -172,6 +192,7 @@
                         echo "</div>";
                         echo "<hr width = '83%'>";
                     }
+                    
                     else {
                         echo "<div class='row'>";
                         
@@ -222,7 +243,90 @@
                         echo "</div>";
                         echo "</div>";
                         echo "<hr width = '83%'>";
-                    } 
+                    }
+                }
+                    else {
+                        if($row['marked'] == 1) {
+                        $marked = true;
+                        echo "<div class='row'>";
+                        
+                        
+                        
+                        if($upvote == 0 && $downvote == 0) {
+                        echo "<span class='col-sm-1'><i id='".$row['aid']."'class='fa fa-check fa-2x green' aria-hidden='true' onclick='changetick(this.id)'></i><br><br><i id='".$aupid."' class='fa fa-2x fa-arrow-circle-o-up' aria-hidden='true' vote_type = 'u' voted='".$upvote."'></i><br><span id='".$avoteid."'>".$row['votes']."</span><br><i id='".$adownid."' class='fa fa-2x fa-arrow-circle-o-down' aria-hidden='true' vote_type = 'd' voted='".$downvote."'></i></span>";
+                        }
+                        else if($upvote == 1 && $downvote == 0) {
+                            echo "<span class='col-sm-1'><i id='".$row['aid']."'class='fa fa-check fa-2x green' aria-hidden='true' onclick='changetick(this.id)'></i><br><br><i id='".$aupid."' class='fa fa-2x fa-arrow-circle-o-up green' aria-hidden='true' vote_type = 'u' voted='".$upvote."' ></i><br><span id='".$avoteid."'>".$row['votes']."</span><br><i id='".$adownid."' class='fa fa-2x fa-arrow-circle-o-down' aria-hidden='true' vote_type = 'd' voted='".$downvote."' ></i></span>";
+                        }
+                        else if($upvote == 0 && $downvote == 1) {
+                            echo "<span class='col-sm-1'><i id='".$row['aid']."'class='fa fa-check fa-2x green' aria-hidden='true' onclick='changetick(this.id)'></i><br><br><i id='".$aupid."' class='fa fa-2x fa-arrow-circle-o-up' aria-hidden='true' vote_type = 'u' voted='".$upvote."' ></i><br><span id='".$avoteid."'>".$row['votes']."</span><br><i id='".$adownid."' class='fa fa-2x fa-arrow-circle-o-down green' aria-hidden='true' vote_type = 'd' voted='".$downvote."' ></i></span>";
+                        }
+                        
+                        echo "<span class='col-sm-11'>".($row['answer'])."</span>";
+                        echo "</div>";
+                        echo "<br><br>";
+                        echo "<div class='row'>"; ?>
+                        <div class='col-sm-1 col-sm-offset-8'><img width='60' height='45' src='./uploads/<?php echo $row['answered_user']; ?>' onerror= 'this.src="./uploads/defaultIcon.png";' /> </div>
+                        <?php
+                        echo "<div class='col-sm-3'><span class='asked_by'>answered by <a href='profile.php?uname=".htmlentities($row['answered_user'])."'>".htmlentities($row['answered_user'])."</a></span><br>";
+                        echo "<span class='asked_by'><i class='fa fa-clock-o' aria-hidden='true'></i> on </span>".$row['a_created']."";
+                        echo "</div>";
+                        echo "</div>";
+                        echo "<hr width = '83%'>";
+                    }
+                    
+                    else {
+                        echo "<div class='row'>";
+                        
+                        if(isset($_SESSION['username'])) {
+                            if($qnd_user == $_SESSION['username']) {
+                                
+                                if($upvote == 0 && $downvote == 0) {
+                                echo "<span class='col-sm-1'><i id='".$row['aid']."'class='fa fa-check fa-2x' aria-hidden='true' onclick='changetick(this.id)'></i><br><br><i id='".$aupid."' class='fa fa-2x fa-arrow-circle-o-up' aria-hidden='true' vote_type = 'u' voted='".$upvote."' ></i><br><span id='".$avoteid."'>".$row['votes']."</span><br><i id='".$adownid."' class='fa fa-2x fa-arrow-circle-o-down' aria-hidden='true' vote_type = 'd' voted='".$downvote."' ></i></span>";
+                                }
+                                else if($upvote == 1 && $downvote == 0) {
+                                    echo "<span class='col-sm-1'><i id='".$row['aid']."'class='fa fa-check fa-2x' aria-hidden='true' onclick='changetick(this.id)'></i><br><br><i id='".$aupid."' class='fa fa-2x fa-arrow-circle-o-up green' aria-hidden='true' vote_type = 'u' voted='".$upvote."' ></i><br><span id='".$avoteid."'>".$row['votes']."</span><br><i id='".$adownid."' class='fa fa-2x fa-arrow-circle-o-down' aria-hidden='true' vote_type = 'd' voted='".$downvote."' ></i></span>";
+                                }
+                                else if($upvote == 0 && $downvote == 1) {
+                                    echo "<span class='col-sm-1'><i id='".$row['aid']."'class='fa fa-check fa-2x' aria-hidden='true' onclick='changetick(this.id)'></i><br><br><i id='".$aupid."' class='fa fa-2x fa-arrow-circle-o-up' aria-hidden='true' vote_type = 'u' voted='".$upvote."' ></i><br><span id='".$avoteid."'>".$row['votes']."</span><br><i id='".$adownid."' class='fa fa-2x fa-arrow-circle-o-down green' aria-hidden='true' vote_type = 'd' voted='".$downvote."' ></i></span>";
+                                }
+                            }
+                            else {
+                                if($upvote == 0 && $downvote == 0) {
+                                    echo "<span class='col-sm-1'><i id='".$aupid."' class='fa fa-2x fa-arrow-circle-o-up' aria-hidden='true' vote_type = 'u' voted='".$upvote."' ></i><br><span id='".$avoteid."'>".$row['votes']."</span><br><i id='".$adownid."' class='fa fa-2x fa-arrow-circle-o-down' aria-hidden='true' vote_type = 'd' voted='".$downvote."' ></i></span>";
+                                }
+                                else if($upvote == 1 && $downvote == 0) {
+                                    echo "<span class='col-sm-1'><i id='".$aupid."' class='fa fa-2x fa-arrow-circle-o-up green' aria-hidden='true' vote_type = 'u' voted='".$upvote."' ></i><br><span id='".$avoteid."'>".$row['votes']."</span><br><i id='".$adownid."' class='fa fa-2x fa-arrow-circle-o-down' aria-hidden='true' vote_type = 'd' voted='".$downvote."' ></i></span>";
+                                }
+                                else if($upvote == 0 && $downvote == 1) {
+                                    echo "<span class='col-sm-1'><i id='".$aupid."' class='fa fa-2x fa-arrow-circle-o-up' aria-hidden='true' vote_type = 'u' voted='".$upvote."' ></i><br><span id='".$avoteid."'>".$row['votes']."</span><br><i id='".$adownid."' class='fa fa-2x fa-arrow-circle-o-down green' aria-hidden='true' vote_type = 'd' voted='".$downvote."' ></i></span>";
+                                }
+                            }
+                        }
+                        else {
+                            if($upvote == 0 && $downvote == 0) {
+                                echo "<span class='col-sm-1'><i id='".$aupid."' class='fa fa-2x fa-arrow-circle-o-up' aria-hidden='true' vote_type = 'u' voted='".$upvote."' ></i><br><span id='".$avoteid."'>".$row['votes']."</span><br><i id='".$adownid."' class='fa fa-2x fa-arrow-circle-o-down' aria-hidden='true' vote_type = 'd' voted='".$downvote."' ></i></span>";
+                            }
+                            else if($upvote == 1 && $downvote == 0) {
+                                echo "<span class='col-sm-1'><i id='".$aupid."' class='fa fa-2x fa-arrow-circle-o-up green' aria-hidden='true' vote_type = 'u' voted='".$upvote."' ></i><br><span id='".$avoteid."'>".$row['votes']."</span><br><i id='".$adownid."' class='fa fa-2x fa-arrow-circle-o-down' aria-hidden='true' vote_type = 'd' voted='".$downvote."' ></i></span>";
+                            }
+                            else if($upvote == 0 && $downvote == 1) {
+                                echo "<span class='col-sm-1'><i id='".$aupid."' class='fa fa-2x fa-arrow-circle-o-up' aria-hidden='true' vote_type = 'u' voted='".$upvote."' ></i><br><span id='".$avoteid."'>".$row['votes']."</span><br><i id='".$adownid."' class='fa fa-2x fa-arrow-circle-o-down green' aria-hidden='true' vote_type = 'd' voted='".$downvote."' ></i></span>";
+                            }
+                        }
+                        echo "<span class='col-sm-11'>".($row['answer'])."</span>";
+                        echo "</div>";
+                        echo "<br><br>";
+                        echo "<div class='row'>"; ?>
+                        <div class='col-sm-1 col-sm-offset-8'><img width='60' height='45' src='./uploads/<?php echo $row['answered_user']; ?>' onerror= 'this.src="./uploads/defaultIcon.png";' /> </div>
+                        <?php
+                        echo "<div class='col-sm-3'><span class='asked_by'>answered by <a href='profile.php?uname=".htmlentities($row['answered_user'])."'>".htmlentities($row['answered_user'])."</a></span><br>";
+                        echo "<span class='asked_by'><i class='fa fa-clock-o' aria-hidden='true'></i> on </span>".$row['a_created']."";
+                        echo "</div>";
+                        echo "</div>";
+                        echo "<hr width = '83%'>";
+                    }
+                    }
                     
                     $acount = $acount + 1;
                 }
