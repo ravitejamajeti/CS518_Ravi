@@ -158,12 +158,12 @@ hr{
                 console.log(u.length)
                 
                 if ((u.length < 5) || (u.length > 20)) {
-                    error = "The username is the wrong length.\n";
+                    error = "The username is the wrong length. Should be 5-20 characters \n";
                     alert(error);
                     return false;
                 }
                 else if (illegalChars.test(u)) {
-                    error = "The username contains illegal characters.\n";
+                    error = "The username contains illegal characters. Should not contain anything except underscores (_) \n";
                     alert(error);
                     return false;
                 }
@@ -178,10 +178,16 @@ hr{
                 }
                 
                 if(x.length < 5) {
-                    error = "The password is the wrong length. \n";
+                    error = "The password is the wrong length. Shouble more than 4 characters\n";
                     alert(error);
                     return false;
                 }
+            }
+            
+            function navigatetologin() {
+                
+                location.replace("samplogin.php");
+                
             }
         </script>
     </head>
@@ -209,7 +215,7 @@ hr{
                     $invalid = "1";
                 }
                 else {
-                    $query = "INSERT INTO users (user_name, password) VALUES ('".$_POST['username']."', '".$_POST['create_password']."')";
+                    $query = "INSERT INTO users (user_name, password) VALUES ('".mysqli_real_escape_string($link, $_POST['username'])."', '".mysqli_real_escape_string($link, $_POST['create_password'])."')";
                     
                     mysqli_query($link, $query);
                     
@@ -245,7 +251,8 @@ hr{
                     echo "<font color='red'>Username Already Exists</font>";
                 }
                 else if($invalid == "2") {
-                    echo "<font color='green'>Account Created Successfully</font>";
+                    echo "<font color='green'>Account Created Successfully</font>"; ?>
+                    <button class="btn btn-lg btn-primary" onclick="navigatetologin()">Login</button> <?php
                 }
             ?>
             </form>

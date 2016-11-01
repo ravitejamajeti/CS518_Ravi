@@ -19,7 +19,7 @@
               <ul class="nav navbar-nav navbar-right">
                   <?php
                       if (!isset($_SESSION['username'])) {?>
-                        <li id='signup'><a href='#' class='white'><span class='glyphicon glyphicon-user'></span> Sign Up </a></li>
+                        <li id='signup'><a href='signup.php' class='white'><span class='glyphicon glyphicon-user'></span> Sign Up </a></li>
                         <li><a href='samplogin.php' class='white'><span class='glyphicon glyphicon-log-in'></span> Login</a></li>
                     <?php  }
                       else {?>
