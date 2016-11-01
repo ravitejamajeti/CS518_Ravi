@@ -209,7 +209,7 @@ hr{
         <h2 class='login_title text-center'>Login</h2>
         <hr>
 
-            <form class="form-signin" method="post" onsubmit="return validateForm()">
+            <form name="myForm" class="form-signin" method="post" onsubmit="return validateForm()">
                 <span id="reauth-email" class="reauth-email"></span>
                 <p class="input_title">Email</p>
                 <input type="text" id="inputEmail" class="login_box" placeholder="username" name="loginid" required autofocus>

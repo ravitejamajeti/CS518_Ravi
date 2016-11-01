@@ -71,9 +71,10 @@
                     </div>
                     <br><br>
                     <div class='row'>
-                    <div class='col-sm-4 col-sm-offset-8'><span class='asked_by'>asked by </span><a href=''> <?php echo htmlentities($row['qnd_user']) ?> </a></div>
-                    </div>
-                    <hr>
+                        <div class='col-sm-1 col-sm-offset-8'><img width='60' height='45' src='./uploads/<?php echo htmlentities($row['qnd_user']) ?>' onerror= 'this.src="./uploads/defaultIcon.png";' /> </div>
+                            <div class='col-sm-3'><span class='asked_by'>asked by </span><a href='profile.php?uname=<?php echo htmlentities($row['qnd_user']) ?>'> <?php echo htmlentities($row['qnd_user']) ?> </a><br><span class='asked_by'><i class='fa fa-clock-o' aria-hidden='true'></i> on <?php echo htmlentities($row['q_created']) ?></span></div>
+                        </div>
+                        <hr>
             <?php
             }
             
@@ -122,12 +123,13 @@
                         echo "<span class='col-sm-11'>".($row['answer'])."</span>";
                         echo "</div>";
                         echo "<br><br>";
-                        echo "<div class='row'>";
-                        echo "<div class='col-sm-4 col-sm-offset-8'><span class='asked_by'>answered by </span><a href=''>".htmlentities($row['answered_user'])."</a></div>";
+                        echo "<div class='row'>"; ?>
+                        <div class='col-sm-1 col-sm-offset-8'><img width='60' height='45' src='./uploads/<?php echo $row['answered_user']; ?>' onerror= 'this.src="./uploads/defaultIcon.png";' /> </div>
+                        <?php
+                        echo "<div class='col-sm-3'><span class='asked_by'>answered by <a href='profile.php?uname=".htmlentities($row['answered_user'])."'>".htmlentities($row['answered_user'])."</a></span><br>";
+                        echo "<span class='asked_by'><i class='fa fa-clock-o' aria-hidden='true'></i> on </span>".$row['a_created']."";
                         echo "</div>";
-                        echo "<div class='row'>";
-                    echo "<div class='col-sm-4 col-sm-offset-8 asked_by'><span class='asked_by'><i class='fa fa-clock-o' aria-hidden='true'></i> on </span>".$row['a_created']."</div>";
-                    echo "</div>";
+                        echo "</div>";
                         echo "<hr width = '83%'>";
                     }
                     else {
@@ -149,11 +151,12 @@
                         echo "<span class='col-sm-11'>".($row['answer'])."</span>";
                         echo "</div>";
                         echo "<br><br>";
-                        echo "<div class='row'>";
-                        echo "<div class='col-sm-4 col-sm-offset-8'><span class='asked_by'>answered by </span><a href=''>".htmlentities($row['answered_user'])."</a></div>";
+                        echo "<div class='row'>"; ?>
+                        <div class='col-sm-1 col-sm-offset-8'><img width='60' height='45' src='./uploads/<?php echo $row['answered_user']; ?>' onerror= 'this.src="./uploads/defaultIcon.png";' /> </div>
+                        <?php
+                        echo "<div class='col-sm-3'><span class='asked_by'>answered by <a href='profile.php?uname=".htmlentities($row['answered_user'])."'>".htmlentities($row['answered_user'])."</a></span><br>";
+                        echo "<span class='asked_by'><i class='fa fa-clock-o' aria-hidden='true'></i> on </span>".$row['a_created']."";
                         echo "</div>";
-                        echo "<div class='row'>";
-                        echo "<div class='col-sm-4 col-sm-offset-8 asked_by'><span class='asked_by'><i class='fa fa-clock-o' aria-hidden='true'></i> on </span>".$row['a_created']."</div>";
                         echo "</div>";
                         echo "<hr width = '83%'>";
                     } 
@@ -320,12 +323,14 @@
                             var session_user =  "<?php echo $_SESSION['username']; ?>";
                             
                             console.log(response['aid'])
+                            
+                            def = './uploads/defaultIcon.png";'
 
                             if(qnd_user == session_user) {
-                                iDiv.innerHTML = "<div class='row'><span><i id = "+response['aid']+" class='fa fa-check fa-2x col-sm-1' aria-hidden='true' onclick='changetick(this.id)'></i><br><br><i class='fa fa-2x fa-arrow-circle-o-up' aria-hidden='true'></i><br>0<br><i class='fa fa-2x fa-arrow-circle-o-down' aria-hidden='true'></i></span><span class='col-sm-11'>"+answer+"</div><br><br><div class='row'><div class='col-sm-4 col-sm-offset-8'><span class='asked_by'>answered by </span><a href=''>"+htmlEntities(response['username'])+"</a></div></div><div class='row'><div class='col-sm-4 col-sm-offset-8 asked_by'><span class='asked_by'><i class='fa fa-clock-o' aria-hidden='true'></i> now </span></div></div><hr width = '83%'>"
+                                iDiv.innerHTML = "<div class='row'><span class='col-sm-1'><i id = "+response['aid']+" class='fa fa-check fa-2x' aria-hidden='true' onclick='changetick(this.id)'></i><br><br><i class='fa fa-2x fa-arrow-circle-o-up' aria-hidden='true'></i><br>0<br><i class='fa fa-2x fa-arrow-circle-o-down' aria-hidden='true'></i></span><span class='col-sm-11'>"+answer+"</div><br><br><div class='row'><div class='col-sm-1 col-sm-offset-8'><img width='60' height='45' src='./uploads/"+htmlEntities(response['username'])+"' onerror = 'this.src="+def+"' /></div><div class='col-sm-3'><span class='asked_by'>answered by <a href=''>"+htmlEntities(response['username'])+"</a></span><br><span class='asked_by'><i class='fa fa-clock-o' aria-hidden='true'></i> now </span></div></div><hr width = '83%'>"
                             }
                             else {
-                                iDiv.innerHTML = "<div class='row'><span class = 'disp_none'><i id = "+response['aid']+" class='fa fa-check fa-2x col-sm-1' aria-hidden='true' onclick='changetick(this.id)'></i></span><span class='col-sm-1'><i class='fa fa-2x fa-arrow-circle-o-up' aria-hidden='true'></i><br>0<br><i class='fa fa-2x fa-arrow-circle-o-down' aria-hidden='true'></i></span><span class='col-sm-11'>"+answer+"</div><br><br><div class='row'><div class='col-sm-4 col-sm-offset-8'><span class='asked_by'>answered by </span><a href=''>"+htmlEntities(response['username'])+"</a></div></div><div class='row'><div class='col-sm-4 col-sm-offset-8 asked_by'><span class='asked_by'><i class='fa fa-clock-o' aria-hidden='true'></i> now </span></div></div><hr width = '83%'>"
+                                iDiv.innerHTML = "<div class='row'><span class = 'disp_none'><i id = "+response['aid']+" class='fa fa-check fa-2x col-sm-1' aria-hidden='true' onclick='changetick(this.id)'></i></span><span class='col-sm-1'><i class='fa fa-2x fa-arrow-circle-o-up' aria-hidden='true'></i><br>0<br><i class='fa fa-2x fa-arrow-circle-o-down' aria-hidden='true'></i></span><span class='col-sm-11'>"+answer+"</div><br><br><div class='row'><div class='col-sm-1 col-sm-offset-8'><img width='60' height='45' src='./uploads/"+htmlEntities(response['username'])+"' onerror = 'this.src="+def+"' /></div><div class='col-sm-3'><span class='asked_by'>answered by <a href=''>"+htmlEntities(response['username'])+"</a></span><br><span class='asked_by'><i class='fa fa-clock-o' aria-hidden='true'></i> now </span></div></div><hr width = '83%'>"
                             }
                         }
                     }, 'json');

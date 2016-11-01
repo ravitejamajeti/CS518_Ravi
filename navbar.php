@@ -9,6 +9,7 @@
             <div class="collapse navbar-collapse" id="myNavbar">
               <ul class="nav navbar-nav">
                 <li><a href="ask_question.php" id="ask" class="white">Ask Question</a></li>
+                <li><a href="allquestions.php" id="ask" class="white">All Questions</a></li>
             <?php
                 if (isset($_SESSION['username'])) { ?>
                     <li><a href="my_questions.php" id="my_question" class="white">Asked</a></li> 
@@ -22,7 +23,7 @@
                         <li><a href='samplogin.php' class='white'><span class='glyphicon glyphicon-log-in'></span> Login</a></li>
                     <?php  }
                       else {?>
-                        <li id='signup'><a href='#' class='white'><span class='glyphicon glyphicon-user'></span> <?php echo $_SESSION['username'];?> </a></li>
+                        <li id='signup'><a href='profile.php?uname=<?php echo $_SESSION['username'] ?>' class='white'><span class='glyphicon glyphicon-user'></span> <?php echo $_SESSION['username'];?> </a></li>
                         <li><a href='logout.php' class='white'><span class='glyphicon glyphicon-log-in'></span> Logout</a></li>
                      <?php }
                   ?>

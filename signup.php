@@ -151,17 +151,35 @@ hr{
         
         <script>
             function validateForm() {
-                var x = document.forms["myForm"]["loginid"].value;
-                x = x.trim()
-                if (x == null || x == "" || x == " ") {
-                    alert("Login must be filled out");
+                
+                var illegalChars = /\W/; 
+                
+                var u = document.forms["myForm"]["username"].value;
+                console.log(u.length)
+                
+                if ((u.length < 5) || (u.length > 20)) {
+                    error = "The username is the wrong length.\n";
+                    alert(error);
                     return false;
                 }
+                else if (illegalChars.test(u)) {
+                    error = "The username contains illegal characters.\n";
+                    alert(error);
+                    return false;
+                }
+                    
+                var x = document.forms["myForm"]["create_password"].value;
                 
-                x = document.forms["myForm"]["password"].value;
-                x = x.trim()
-                if (x == null || x == "" || x == " ") {
-                    alert("Password must be filled out");
+                var y = document.forms["myForm"]["confirm_password"].value;
+                
+                if(x != y) {
+                    alert("Passwords didnt match")
+                    return false
+                }
+                
+                if(x.length < 5) {
+                    error = "The password is the wrong length. \n";
+                    alert(error);
                     return false;
                 }
             }
@@ -174,30 +192,29 @@ hr{
         
         <?php
             include 'db_connect.php';
-            $invalid = true; 
+            $invalid = "0"; 
 
             if($_POST)
             {
                 //echo "Userid entered is : ".$_POST['loginid'];
                 //echo "Password entered is : ".$_POST['password'];
 
-                $query = "SELECT * FROM users where user_name = '".mysqli_real_escape_string($link, $_POST['loginid'])."' and password = '".mysqli_real_escape_string($link, $_POST['password'])."'";
+                $query = "SELECT * FROM users where user_name = '".mysqli_real_escape_string($link, $_POST['username'])."'";
+                
+                $result = mysqli_query($link, $query);
 
-                if($result = mysqli_query($link, $query))
-                {
-                    $row = mysqli_fetch_array($result);
+                $num_rows = mysqli_num_rows($result);
 
-                    //print_r($row);
-
-                    if($row)
-                    {
-                        $_SESSION['loggedin'] = true;
-                        $_SESSION['username'] = $_POST['loginid'];
-                        $user = true;
-                        ?> <script> location.replace("index.php"); </script> 
-             <?php  }
+                if($num_rows > 0) {
+                    $invalid = "1";
                 }
-                $invalid = false;  
+                else {
+                    $query = "INSERT INTO users (user_name, password) VALUES ('".$_POST['username']."', '".$_POST['create_password']."')";
+                    
+                    mysqli_query($link, $query);
+                    
+                    $invalid = "2";
+                }
             }
 
 ?>
@@ -208,12 +225,10 @@ hr{
         <h2 class='login_title text-center'>SignUp</h2>
         <hr>
 
-            <form class="form-signin" method="post" onsubmit="return validateForm()">
+            <form name="myForm" class="form-signin" method="post" onsubmit="return validateForm()">
                 <span id="reauth-email" class="reauth-email"></span>
-                <p class="input_title">Enter Your Email</p>
-                <input type="text" id="inputEmail" class="login_box" placeholder="email" name="email" required autofocus>
                 <p class="input_title">Create Username</p>
-                <input type="text" id="inputEmail" class="login_box" placeholder="username" name="loginid" required autofocus>
+                <input type="text" id="inputEmail" class="login_box" placeholder="username" name="username" required autofocus>
                 <p class="input_title">Create Password</p>
                 <input type="password" id="inputPassword" class="login_box" placeholder="******" name="create_password" required>
                 <p class="input_title">Confirm Password</p>
@@ -226,8 +241,11 @@ hr{
                 <button class="btn btn-lg btn-primary" type="submit">SignUp</button>
                 <br>
                 <?php
-                if($invalid == false) {
-                    echo "<font color='red'>Invalid username or password</font>";
+                if($invalid == "1") {
+                    echo "<font color='red'>Username Already Exists</font>";
+                }
+                else if($invalid == "2") {
+                    echo "<font color='green'>Account Created Successfully</font>";
                 }
             ?>
             </form>

@@ -11,10 +11,30 @@
     <body>
         
         <?php include 'config.php'; include 'navbar.php'; ?>
+        
+        <?php 
+            if(isset($_POST['submit'])){
+                move_uploaded_file($_FILES['file']['tmp_name'],"uploads/".$_SESSION['username']);   
+            }
+        ?>
         <div class="container">
             <div class="row">
-                <div class ='col-md-4'>Picture</div>
-                <div class ='col-md-8 prof_details'>Username</div>
+                <div class ='col-md-4'> 
+                    <img width='100' height='100' src='./uploads/<?php echo $_SESSION['username']; ?>' onerror= 'this.src="./uploads/defaultIcon.png";' /> 
+                    <br><br>
+                    <form action="" method="post" enctype="multipart/form-data">
+                        <input type="file" name="file">
+                        <input type="submit" name="submit">
+                    </form>
+                </div>
+                <div class ='col-md-8 prof_details'>Username - <?php echo $_SESSION['username']; ?>
+                    <br><br>
+                    <span>Rank</span>
+                    <br><br>
+                    <span>Questions Count</span>
+                    <br><br>
+                    <span>Answers Count</span>
+                </div>
             </div>
         </div>
         <br>

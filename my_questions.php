@@ -34,7 +34,7 @@
                         </div>
                         <div class ='col-md-1'>
                         <span style="background-color: #4682B4; color:white; text-align: center;  border-radius: 3px; box-shadow: 0 0 6px #ccc;">Votes</span><br>
-                        <span style="position:relative; left:10px;"> <?php echo $row['views']; ?></span>
+                        <span style="position:relative; left:10px;"> <?php echo $row['votes']; ?></span>
                         </div>
                         <div class ='col-md-1'>
                         <span style="background-color: #4682B4; color:white; text-align: center;  border-radius: 3px; box-shadow: 0 0 6px #ccc;">Answers</span><br>
