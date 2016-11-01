@@ -43,6 +43,8 @@
                 $upvote = 0;
                     $downvote = 0;
                 
+                $loggedin = 1;
+                
                 if(isset($_SESSION['username'])) {
                 
                 $query = "SELECT * from question_votes where qid = '".$_GET['qid']."' and uid = '".$_SESSION['uid']."'";
@@ -63,6 +65,9 @@
                     $upvote = 0;
                     $downvote = 0;
                 }
+                }
+                else {
+                    $loggedin = 0;
                 }
                 
                 $qnd_user = $row['qnd_user']; ?>
@@ -243,6 +248,7 @@
             function changetick(str) {
                 
                 var qnd_user =  "<?php echo $qnd_user; ?>";
+                
                 var session_user =  "<?php echo $_SESSION['username']; ?>";
                 
                 if(qnd_user == session_user) {
@@ -273,6 +279,7 @@
             }   
             
             function changevote(status) {
+                
                 if(status.getAttribute('voted') == 1) {
                     alert("You cannot vote")
                 }
@@ -401,6 +408,8 @@
                     }, 'json');
                 }
             }
+            
+            
             
             function submitanswer() {
                 
