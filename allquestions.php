@@ -15,13 +15,12 @@
         <div class="container">
             
             <div class="row">
-                <div class="col-sm-9"></div>
-                <div class="col-sm-3">
+                <div class="col-sm-8"></div>
+                <div class="col-sm-4">
                     <ul class="pagination">
-                      <li><a href="?page=1">1</a></li>
-                      <li><a href="?page=2">2</a></li>
-                      <li><a href="?page=3">3</a></li>
-                      <li><a href="?page=4">4</a></li>
+                      <li><a href="?page= <?php $inc_page = $_GET['page'] - 1; echo $inc_page ?>">Previous</a></li>
+                      <li><a href="?page=<?php echo $_GET['page']; ?>"><?php echo $_GET['page']; ?></a></li>
+                      <li><a href="?page= <?php $inc_page = $_GET['page'] + 1; echo $inc_page ?>">Next</a></li>
                     </ul>
                 </div>
             </div>
