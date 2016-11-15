@@ -10,7 +10,7 @@
     
     <body>
         
-        <?php include 'config.php'; include 'navbar.php'; ?>
+        <?php include 'config.php'; include 'db_connect.php'; include 'navbar.php'; ?>
         
         <div class="container">
             
@@ -19,8 +19,6 @@
             <br>
 
             <?php
-
-                include 'db_connect.php';
 
                 $query = "SELECT * from questions order by votes desc limit 5";
 

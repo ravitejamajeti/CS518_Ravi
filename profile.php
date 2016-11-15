@@ -10,7 +10,7 @@
     
     <body>
         
-        <?php include 'config.php'; include 'navbar.php'; ?>
+        <?php include 'config.php'; include 'db_connect.php'; include 'navbar.php'; ?>
         
         <?php 
             if(isset($_POST['submit'])){
@@ -31,7 +31,12 @@
                 </div>
                 <div class ='col-md-8 prof_details'>Username - <?php echo $_GET['uname']; ?>
                     <br><br>
-                    <span>Rank</span>
+                    <?php 
+                        $query = "SELECT sum(votes) from questions where qnd_user = '".mysqli_real_escape_string($link, $_GET['uname'])."'";
+                        $result = mysqli_query($link, $query);
+                        $row = mysqli_fetch_array($result);
+                    ?>
+                    <span>Score - <?php echo $row[0] ?> </span>
                     <br><br>
                     <span>Questions Count</span>
                     <br><br>
@@ -47,8 +52,6 @@
             <br><br>
 
             <?php
-
-                include 'db_connect.php';
 
                 $query = "SELECT * from questions where qnd_user = '".mysqli_real_escape_string($link, $_GET['uname'])."'";
 

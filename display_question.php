@@ -17,7 +17,7 @@
     
     <body>
         
-        <?php include 'config.php'; include 'navbar.php'; ?>
+        <?php include 'config.php'; include 'db_connect.php'; include 'navbar.php'; ?>
         
         <br><br>
         
@@ -26,7 +26,6 @@
         <div class="container">
         
         <?php
-            include 'db_connect.php';
             
             $query = "SELECT * from questions where qid = '".$_GET['qid']."'";
             

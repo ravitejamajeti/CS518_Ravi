@@ -10,21 +10,51 @@
     
     <body>
         
-        <?php include 'config.php'; include 'navbar.php'; ?>
+        <?php include 'config.php'; include 'db_connect.php'; include 'navbar.php'; ?>
         
         <div class="container">
+            
+            <div class="row">
+                <div class="col-sm-9"></div>
+                <div class="col-sm-3">
+                    <ul class="pagination">
+                      <li><a href="?page=1">1</a></li>
+                      <li><a href="?page=2">2</a></li>
+                      <li><a href="?page=3">3</a></li>
+                      <li><a href="?page=4">4</a></li>
+                    </ul>
+                </div>
+            </div>
             
             <h3>Recent Questions</h3>
             <hr>
             <br>
 
             <?php
+            
+                $per_page = 5;
+            
+                $query = "SELECT count(*) from questions";
+                    
+                $result = mysqli_query($link, $query);
+            
+                $row = mysqli_fetch_array($result);
+            
+                $pages = ceil($row[0]/$per_page);
+            
+                if(!isset($_GET['page'])) {
+                    header("location: allquestions.php?page=1");
+                }
+                else {
+                    $page = $_GET['page'];
+                }
+            
+                $start = ($page - 1) * $per_page;
 
-                include 'db_connect.php';
-
-                $query = "SELECT * from questions";
+                $query = "SELECT * from questions limit $start, $per_page";
 
                 if($result = mysqli_query($link, $query)) {
+                    
                     while($row = mysqli_fetch_array($result)) { ?>
                     
                         <div class='row'>

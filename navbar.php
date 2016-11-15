@@ -17,6 +17,7 @@
             <?php  } ?>
               </ul>
               <ul class="nav navbar-nav navbar-right">
+                  <li class='white' style="position:relative; top:13px "><label for="tags">Search: </label> <input class='green' id="tags" onkeydown="search(this)"></li>
                   <?php
                       if (!isset($_SESSION['username'])) {?>
                         <li id='signup'><a href='signup.php' class='white'><span class='glyphicon glyphicon-user'></span> Sign Up </a></li>
@@ -31,3 +32,29 @@
             </div>
           </div>
     </nav>
+
+<?php 
+    $query = "SELECT user_name from users";
+    $result = mysqli_query($link, $query);
+    while($row = mysqli_fetch_array($result)) {
+        $users[]=$row[0];
+    }
+?>
+<script>
+    
+    var users_array = <?php echo json_encode($users );?>;
+    
+    console.log(users_array);
+    
+  $( function() {
+    $( "#tags" ).autocomplete({
+      source: users_array
+    });
+  } );
+    
+    function search(ele) {
+    if(event.keyCode == 13) {
+        location.replace("profile.php?uname="+ele.value);
+    }
+}
+  </script>
