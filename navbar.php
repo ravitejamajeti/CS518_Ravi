@@ -9,11 +9,12 @@
             <div class="collapse navbar-collapse" id="myNavbar">
               <ul class="nav navbar-nav">
                 <li><a href="ask_question.php" id="ask" class="white">Ask Question</a></li>
-                <li><a href="allquestions.php" id="ask" class="white">All Questions</a></li>
+                <li><a href="allquestions.php?page=1" id="ask" class="white">All Questions</a></li>
             <?php
                 if (isset($_SESSION['username'])) { ?>
                     <li><a href="my_questions.php" id="my_question" class="white">Asked</a></li> 
                     <li><a href="my_answers.php" id="my_answer" class="white">Answered</a></li>
+                    <li><a href="admin.php?page=1&qpage=1" id="admin" class="white">Admin</a></li>
             <?php  } ?>
               </ul>
               <ul class="nav navbar-nav navbar-right">

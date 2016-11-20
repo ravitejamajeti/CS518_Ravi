@@ -33,13 +33,11 @@ if (isset($_SESSION['username'])) {
     
     <body>
         
-        <?php include 'navbar.php'; ?>
+        <?php include 'db_connect.php'; include 'navbar.php'; ?>
         
         <?php
         
         $posted = true;
-        
-            include 'db_connect.php';
             
             if($_POST) {
 

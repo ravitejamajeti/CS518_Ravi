@@ -10,7 +10,7 @@
     
     <body>
         
-        <?php include 'config.php'; include 'navbar.php'; ?>
+        <?php include 'config.php'; include 'db_connect.php'; include 'navbar.php'; ?>
         
         <div class="container">
             
@@ -19,8 +19,6 @@
             <br><br>
 
             <?php
-
-                include 'db_connect.php';
 
                 $query = "SELECT * from questions where qnd_user = '".mysqli_real_escape_string($link, $_SESSION['username'])."'";
 

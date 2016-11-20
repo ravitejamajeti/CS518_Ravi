@@ -10,7 +10,7 @@
     
     <body>
         
-        <?php include 'config.php'; include 'navbar.php'; ?>
+        <?php include 'config.php'; include 'db_connect.php'; include 'navbar.php'; ?>
         
         <?php 
             if(isset($_POST['submit'])){
@@ -20,16 +20,23 @@
         <div class="container">
             <div class="row">
                 <div class ='col-md-4'> 
-                    <img width='100' height='100' src='./uploads/<?php echo $_SESSION['username']; ?>' onerror= 'this.src="./uploads/defaultIcon.png";' /> 
+                    <img width='100' height='100' src='./uploads/<?php echo $_GET['uname']; ?>' onerror= 'this.src="./uploads/defaultIcon.png";' /> 
                     <br><br>
+                    <?php if($_SESSION['username'] == $_GET['uname']) {?>
                     <form action="" method="post" enctype="multipart/form-data">
                         <input type="file" name="file">
                         <input type="submit" name="submit">
                     </form>
+                    <?php } ?>
                 </div>
-                <div class ='col-md-8 prof_details'>Username - <?php echo $_SESSION['username']; ?>
+                <div class ='col-md-8 prof_details'>Username - <?php echo $_GET['uname']; ?>
                     <br><br>
-                    <span>Rank</span>
+                    <?php 
+                        $query = "SELECT sum(votes) from questions where qnd_user = '".mysqli_real_escape_string($link, $_GET['uname'])."'";
+                        $result = mysqli_query($link, $query);
+                        $row = mysqli_fetch_array($result);
+                    ?>
+                    <span>Score - <?php echo $row[0] ?> </span>
                     <br><br>
                     <span>Questions Count</span>
                     <br><br>
@@ -46,9 +53,7 @@
 
             <?php
 
-                include 'db_connect.php';
-
-                $query = "SELECT * from questions where qnd_user = '".mysqli_real_escape_string($link, $_SESSION['username'])."'";
+                $query = "SELECT * from questions where qnd_user = '".mysqli_real_escape_string($link, $_GET['uname'])."'";
 
                 if($result = mysqli_query($link, $query)) {
                     while($row = mysqli_fetch_array($result)) { ?>
@@ -60,13 +65,13 @@
                         </div>
                         <div class ='col-md-1'>
                         <span style="background-color: #4682B4; color:white; text-align: center;  border-radius: 3px; box-shadow: 0 0 6px #ccc;">Votes</span><br>
-                        <span style="position:relative; left:10px;"> <?php echo $row['views']; ?></span>
+                        <span style="position:relative; left:10px;"> <?php echo $row['votes']; ?></span>
                         </div>
                         <div class ='col-md-1'>
                         <span style="background-color: #4682B4; color:white; text-align: center;  border-radius: 3px; box-shadow: 0 0 6px #ccc;">Answers</span><br>
                         <span style="position:relative; left:10px;"> <?php echo $row['views']; ?></span>
                         </div>
-                        <a href="display_question.php?qid= <?php echo $row['qid']; ?> "rel="tooltip" data-html="true" title = "" onmouseover="answer_tooltip(this.id)" class = "question_hyperlink col-md-9 red-tooltip" id = "<?php echo $row['qid']; ?>" > <?php echo htmlentities($row['question_title']); ?></a>
+                        <a href="display_admin_ques.php?qid= <?php echo $row['qid']; ?> "rel="tooltip" data-html="true" title = "" onmouseover="answer_tooltip(this.id)" class = "question_hyperlink col-md-9 red-tooltip" id = "<?php echo $row['qid']; ?>" > <?php echo htmlentities($row['question_title']); ?></a>
                         </div>
                         <br><br>
                         <div class="row">
