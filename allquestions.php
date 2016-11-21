@@ -14,13 +14,30 @@
         
         <div class="container">
             
+            <?php 
+            
+                $per_page = 10;
+            
+                $query = "SELECT count(*) from questions";
+                    
+                $result = mysqli_query($link, $query);
+            
+                $row = mysqli_fetch_array($result);
+            
+                $pages = ceil($row[0]/$per_page);
+            ?>
+            
             <div class="row">
                 <div class="col-sm-8"></div>
                 <div class="col-sm-4">
                     <ul class="pagination">
+                    <?php if($_GET['page'] > 1) { ?>
                       <li><a href="?page= <?php $inc_page = $_GET['page'] - 1; echo $inc_page ?>">Previous</a></li>
+                        <?php } ?>
                       <li><a href="?page=<?php echo $_GET['page']; ?>"><?php echo $_GET['page']; ?></a></li>
+                        <?php if($_GET['page'] < $pages) { ?>
                       <li><a href="?page= <?php $inc_page = $_GET['page'] + 1; echo $inc_page ?>">Next</a></li>
+                        <?php } ?>
                     </ul>
                 </div>
             </div>
@@ -31,16 +48,6 @@
 
             <?php
             
-                $per_page = 5;
-            
-                $query = "SELECT count(*) from questions";
-                    
-                $result = mysqli_query($link, $query);
-            
-                $row = mysqli_fetch_array($result);
-            
-                $pages = ceil($row[0]/$per_page);
-            
                 if(!isset($_GET['page'])) {
                     header("location: allquestions.php?page=1");
                 }
@@ -50,7 +57,7 @@
             
                 $start = ($page - 1) * $per_page;
 
-                $query = "SELECT * from questions limit $start, $per_page";
+                $query = "SELECT * from questions order by qid desc limit $start, $per_page";
 
                 if($result = mysqli_query($link, $query)) {
                     
