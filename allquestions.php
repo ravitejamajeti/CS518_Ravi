@@ -54,7 +54,13 @@
 
                 if($result = mysqli_query($link, $query)) {
                     
-                    while($row = mysqli_fetch_array($result)) { ?>
+                    while($row = mysqli_fetch_array($result)) { 
+                    
+                        $query1 = "SELECT score from users where user_name = '".$row['qnd_user']."'";
+                        $result1 = mysqli_query($link, $query1);
+                        $row1 = mysqli_fetch_array($result1);
+                            
+                    ?>          
                     
                         <div class='row'>
                         <div class ='col-md-1'>
@@ -73,8 +79,8 @@
                         </div>
                         <br><br>
                         <div class='row'>
-                        <div class='col-sm-1 col-sm-offset-8'><img width='60' height='45' src='./uploads/<?php echo htmlentities($row['qnd_user']) ?>' onerror= 'this.src="./uploads/defaultIcon.png";' /> </div>
-                            <div class='col-sm-3'><span class='asked_by'>asked by </span><a href='profile.php?uname=<?php echo htmlentities($row['qnd_user']) ?>'> <?php echo htmlentities($row['qnd_user']) ?> </a><br><span class='asked_by'><i class='fa fa-clock-o' aria-hidden='true'></i> on <?php echo htmlentities($row['q_created']) ?></span></div>
+                        <div class='col-sm-1 col-sm-offset-8'><img width='60' height='60' src='./uploads/<?php echo htmlentities($row['qnd_user']) ?>' onerror= 'this.src="./uploads/defaultIcon.png";' /> </div>
+                            <div class='col-sm-3'><span class='asked_by'>asked by </span><a href='profile.php?uname=<?php echo htmlentities($row['qnd_user']) ?>'> <?php echo htmlentities($row['qnd_user']) ?> </a><br><span class='asked_by'>User Score - <?php echo $row1['score']; ?></span ><br><span class='asked_by'><i class='fa fa-clock-o' aria-hidden='true'></i> on <?php echo htmlentities($row['q_created']) ?></span></div>
                         </div>
                         <hr>
                         

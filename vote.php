@@ -15,11 +15,18 @@
             mysqli_query($link, $query);
             
             if($_POST['v_type'] == 2) {
+                
+                $query = "update users set score = score - 1 where user_name = (select qnd_user from questions where qid = '".$_POST['qid']."')";
+                mysqli_query($link, $query);
+                
                 $query = "update questions set votes = votes - 1 where qid = '".$_POST['qid']."'";
                 
                 $voted = 2;
             }
             else if($_POST['v_type'] == 1) {
+                $query = "update users set score = score + 1 where user_name = (select qnd_user from questions where qid = '".$_POST['qid']."')";
+                mysqli_query($link, $query);
+                
                 $query = "update questions set votes = votes + 1 where qid = '".$_POST['qid']."'";
                 
                 $voted = 1;
@@ -44,6 +51,10 @@
             if($row['vote_type'] == 1) {
                 $query = "delete from question_votes where uid = '".$_SESSION['uid']."' and qid = '".$_POST['qid']."'";
                 mysqli_query($link, $query);
+                
+                $query = "update users set score = score - 1 where user_name = (select qnd_user from questions where qid = '".$_POST['qid']."')";
+                mysqli_query($link, $query);
+                
                 $query = "update questions set votes = votes - 1 where qid = '".$_POST['qid']."'";
                 
                 $voted = 0;
@@ -51,6 +62,10 @@
             else if($row['vote_type'] == 2) {
                 $query = "delete from question_votes where uid = '".$_SESSION['uid']."' and qid = '".$_POST['qid']."'";
                 mysqli_query($link, $query);
+                
+                $query = "update users set score = score + 1 where user_name = (select qnd_user from questions where qid = '".$_POST['qid']."')";
+                mysqli_query($link, $query);
+                
                 $query = "update questions set votes = votes + 1 where qid = '".$_POST['qid']."'";
                 
                 $voted = 0;
