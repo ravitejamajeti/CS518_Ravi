@@ -142,41 +142,43 @@
                     
                     if(isset($_SESSION['username'])) { 
                     
-                    $query1 = "SELECT * from answer_votes where aid = '".$row['aid']."' and uid = '".$_SESSION['uid']."'";
-                    
-                    $result1 = mysqli_query($link, $query1);
-                    
-                    $row1 = mysqli_fetch_array($result1);
-                    
-                    if($row1['vote_type'] == 1) {
-                        $upvote = 1;
-                        $downvote = 0;
-                    }
-                    else if ($row1['vote_type'] == 2){
-                        $upvote = 0;
-                        $downvote = 1;
-                    }
-                    else {
-                        $upvote = 0;
-                        $downvote = 0;
-                    }
+                        $query1 = "SELECT * from answer_votes where aid = '".$row['aid']."' and uid = '".$_SESSION['uid']."'";
+
+                        $result1 = mysqli_query($link, $query1);
+
+                        $row1 = mysqli_fetch_array($result1);
+
+                        if($row1['vote_type'] == 1) {
+                            $upvote = 1;
+                            $downvote = 0;
+                        }
+                        else if ($row1['vote_type'] == 2){
+                            $upvote = 0;
+                            $downvote = 1;
+                        }
+                        else {
+                            $upvote = 0;
+                            $downvote = 0;
+                        }
                         
                     }
+                    
                     if(isset($_SESSION['username'])) {
                     if($row['marked'] == 1) {
                         $marked = true;
+                        
                         echo "<div class='row'>";
                         
                         
                         
                         if($upvote == 0 && $downvote == 0) {
-                        echo "<span class='col-sm-1'><i id='".$row['aid']."'class='fa fa-check fa-2x green' aria-hidden='true' onclick='changetick(this.id)'></i><br><br><i id='".$aupid."' class='fa fa-2x fa-arrow-circle-o-up' aria-hidden='true' vote_type = 'u' voted='".$upvote."' onclick='changevote_answer(this, ".$row['aid'].", ".$acount." )'></i><br><span id='".$avoteid."'>".$row['votes']."</span><br><i id='".$adownid."' class='fa fa-2x fa-arrow-circle-o-down' aria-hidden='true' vote_type = 'd' voted='".$downvote."' onclick='changevote_answer(this, ".$row['aid'].", ".$acount." )'></i></span>";
+                        echo "<span class='col-sm-1'><i id='".$row['aid']."'class='fa fa-check fa-2x greenn' aria-hidden='true' onclick='changetick(this.id)'></i><br><br><i id='".$aupid."' class='fa fa-2x fa-arrow-circle-o-up' aria-hidden='true' vote_type = 'u' voted='".$upvote."' onclick='changevote_answer(this, ".$row['aid'].", ".$acount." )'></i><br><span id='".$avoteid."'>".$row['votes']."</span><br><i id='".$adownid."' class='fa fa-2x fa-arrow-circle-o-down' aria-hidden='true' vote_type = 'd' voted='".$downvote."' onclick='changevote_answer(this, ".$row['aid'].", ".$acount." )'></i></span>";
                         }
                         else if($upvote == 1 && $downvote == 0) {
-                            echo "<span class='col-sm-1'><i id='".$row['aid']."'class='fa fa-check fa-2x green' aria-hidden='true' onclick='changetick(this.id)'></i><br><br><i id='".$aupid."' class='fa fa-2x fa-arrow-circle-o-up green' aria-hidden='true' vote_type = 'u' voted='".$upvote."' onclick='changevote_answer(this, ".$row['aid'].", ".$acount." )'></i><br><span id='".$avoteid."'>".$row['votes']."</span><br><i id='".$adownid."' class='fa fa-2x fa-arrow-circle-o-down' aria-hidden='true' vote_type = 'd' voted='".$downvote."' onclick='changevote_answer(this, ".$row['aid'].", ".$acount." )'></i></span>";
+                            echo "<span class='col-sm-1'><i id='".$row['aid']."'class='fa fa-check fa-2x greenn' aria-hidden='true' onclick='changetick(this.id)'></i><br><br><i id='".$aupid."' class='fa fa-2x fa-arrow-circle-o-up green' aria-hidden='true' vote_type = 'u' voted='".$upvote."' onclick='changevote_answer(this, ".$row['aid'].", ".$acount." )'></i><br><span id='".$avoteid."'>".$row['votes']."</span><br><i id='".$adownid."' class='fa fa-2x fa-arrow-circle-o-down' aria-hidden='true' vote_type = 'd' voted='".$downvote."' onclick='changevote_answer(this, ".$row['aid'].", ".$acount." )'></i></span>";
                         }
                         else if($upvote == 0 && $downvote == 1) {
-                            echo "<span class='col-sm-1'><i id='".$row['aid']."'class='fa fa-check fa-2x green' aria-hidden='true' onclick='changetick(this.id)'></i><br><br><i id='".$aupid."' class='fa fa-2x fa-arrow-circle-o-up' aria-hidden='true' vote_type = 'u' voted='".$upvote."' onclick='changevote_answer(this, ".$row['aid'].", ".$acount." )'></i><br><span id='".$avoteid."'>".$row['votes']."</span><br><i id='".$adownid."' class='fa fa-2x fa-arrow-circle-o-down green' aria-hidden='true' vote_type = 'd' voted='".$downvote."' onclick='changevote_answer(this, ".$row['aid'].", ".$acount." )'></i></span>";
+                            echo "<span class='col-sm-1'><i id='".$row['aid']."'class='fa fa-check fa-2x greenn' aria-hidden='true' onclick='changetick(this.id)'></i><br><br><i id='".$aupid."' class='fa fa-2x fa-arrow-circle-o-up' aria-hidden='true' vote_type = 'u' voted='".$upvote."' onclick='changevote_answer(this, ".$row['aid'].", ".$acount." )'></i><br><span id='".$avoteid."'>".$row['votes']."</span><br><i id='".$adownid."' class='fa fa-2x fa-arrow-circle-o-down green' aria-hidden='true' vote_type = 'd' voted='".$downvote."' onclick='changevote_answer(this, ".$row['aid'].", ".$acount." )'></i></span>";
                         }
                         
                         echo "<span class='col-sm-11'>".($row['answer'])."</span>";
@@ -252,13 +254,13 @@
                         
                         
                         if($upvote == 0 && $downvote == 0) {
-                        echo "<span class='col-sm-1'><i id='".$row['aid']."'class='fa fa-check fa-2x green' aria-hidden='true' onclick='changetick(this.id)'></i><br><br><i id='".$aupid."' class='fa fa-2x fa-arrow-circle-o-up' aria-hidden='true' vote_type = 'u' voted='".$upvote."'></i><br><span id='".$avoteid."'>".$row['votes']."</span><br><i id='".$adownid."' class='fa fa-2x fa-arrow-circle-o-down' aria-hidden='true' vote_type = 'd' voted='".$downvote."'></i></span>";
+                        echo "<span class='col-sm-1'><i id='".$row['aid']."'class='fa fa-check fa-2x greenn' aria-hidden='true' onclick='changetick(this.id)'></i><br><br><i id='".$aupid."' class='fa fa-2x fa-arrow-circle-o-up' aria-hidden='true' vote_type = 'u' voted='".$upvote."'></i><br><span id='".$avoteid."'>".$row['votes']."</span><br><i id='".$adownid."' class='fa fa-2x fa-arrow-circle-o-down' aria-hidden='true' vote_type = 'd' voted='".$downvote."'></i></span>";
                         }
                         else if($upvote == 1 && $downvote == 0) {
-                            echo "<span class='col-sm-1'><i id='".$row['aid']."'class='fa fa-check fa-2x green' aria-hidden='true' onclick='changetick(this.id)'></i><br><br><i id='".$aupid."' class='fa fa-2x fa-arrow-circle-o-up green' aria-hidden='true' vote_type = 'u' voted='".$upvote."' ></i><br><span id='".$avoteid."'>".$row['votes']."</span><br><i id='".$adownid."' class='fa fa-2x fa-arrow-circle-o-down' aria-hidden='true' vote_type = 'd' voted='".$downvote."' ></i></span>";
+                            echo "<span class='col-sm-1'><i id='".$row['aid']."'class='fa fa-check fa-2x greenn' aria-hidden='true' onclick='changetick(this.id)'></i><br><br><i id='".$aupid."' class='fa fa-2x fa-arrow-circle-o-up green' aria-hidden='true' vote_type = 'u' voted='".$upvote."' ></i><br><span id='".$avoteid."'>".$row['votes']."</span><br><i id='".$adownid."' class='fa fa-2x fa-arrow-circle-o-down' aria-hidden='true' vote_type = 'd' voted='".$downvote."' ></i></span>";
                         }
                         else if($upvote == 0 && $downvote == 1) {
-                            echo "<span class='col-sm-1'><i id='".$row['aid']."'class='fa fa-check fa-2x green' aria-hidden='true' onclick='changetick(this.id)'></i><br><br><i id='".$aupid."' class='fa fa-2x fa-arrow-circle-o-up' aria-hidden='true' vote_type = 'u' voted='".$upvote."' ></i><br><span id='".$avoteid."'>".$row['votes']."</span><br><i id='".$adownid."' class='fa fa-2x fa-arrow-circle-o-down green' aria-hidden='true' vote_type = 'd' voted='".$downvote."' ></i></span>";
+                            echo "<span class='col-sm-1'><i id='".$row['aid']."'class='fa fa-check fa-2x greenn' aria-hidden='true' onclick='changetick(this.id)'></i><br><br><i id='".$aupid."' class='fa fa-2x fa-arrow-circle-o-up' aria-hidden='true' vote_type = 'u' voted='".$upvote."' ></i><br><span id='".$avoteid."'>".$row['votes']."</span><br><i id='".$adownid."' class='fa fa-2x fa-arrow-circle-o-down green' aria-hidden='true' vote_type = 'd' voted='".$downvote."' ></i></span>";
                         }
                         
                         echo "<span class='col-sm-11'>".($row['answer'])."</span>";
@@ -357,7 +359,9 @@
                 if(qnd_user == session_user) {
                 
                     if(marked) {
-                        var markedid = document.getElementsByClassName('green')[0].getAttribute('id')
+                        var markedid = document.getElementsByClassName('greenn')[0].getAttribute('id')
+                        console.log("str is ",str)
+                        console.log("marked id is ",markedid)
                         document.getElementById(markedid).setAttribute('class','fa fa-check fa-2x ')
                     }
                 
@@ -371,13 +375,12 @@
                         });
                     }
                     else {
-                        document.getElementById(str).setAttribute('class','fa fa-check fa-2x green')
-                        $.post('./mark_answer.php', {'markedid': str, 'qid': qid}, function(response) {
+                        console.log("marking")
+                        document.getElementById(str).setAttribute('class','fa fa-check fa-2x greenn')
+                        $.post('./mark_answer.php', {'markedid': str, 'qid': qid}, function(response) { 
+                            var markedid = str
                         });
                     }
-                    
-                    //$.post('./mark_answer.php', {'markedid': str, 'qid': qid}, function(response) {
-                    //});
                 }
             }   
             

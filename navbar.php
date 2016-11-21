@@ -18,7 +18,7 @@
             <?php  } ?>
               </ul>
               <ul class="nav navbar-nav navbar-right">
-                  <li class='white' style="position:relative; top:13px "><label for="tags">Search: </label> <input class='green' id="tags" onkeydown="search(this)"></li>
+                  <li class='white' style="position:relative; top:13px "><label for="tags">Search: </label> <input class='green' id="tags" onkeydown="search(this)" onkeyup="filtusers(this)"></li>
                   <?php
                       if (!isset($_SESSION['username'])) {?>
                         <li id='signup'><a href='signup.php' class='white'><span class='glyphicon glyphicon-user'></span> Sign Up </a></li>
@@ -45,7 +45,29 @@
     
     var users_array = <?php echo json_encode($users );?>;
     
-    console.log(users_array);
+    function filtusers(ele) {
+        
+        //console.log(ele.value)
+        
+        filtered_users = []
+        j = 0
+        for(i=0; i<users_array.length; i++) {
+            if(users_array[i].startsWith(ele.value)) {
+                filtered_users[j] = users_array[i]
+                j = j + 1
+                //console.log(users_array[i])
+            }
+        }
+        
+        //console.log("filtered users are ", filtered_users)
+        
+        $(function() {
+            $( "#tags" ).autocomplete({
+            source: filtered_users
+            });
+        });
+        
+    }
     
   $( function() {
     $( "#tags" ).autocomplete({
