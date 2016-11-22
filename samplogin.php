@@ -194,6 +194,7 @@ hr{
                         $_SESSION['loggedin'] = true;
                         $_SESSION['username'] = $_POST['loginid'];
                         $_SESSION['uid'] = $row['uid'];
+                        $_SESSION['role'] = $row['role'];
                         $user = true;
                         ?> <script> location.replace("index.php"); </script> 
              <?php  }

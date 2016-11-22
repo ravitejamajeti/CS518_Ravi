@@ -30,10 +30,15 @@
             
                 <button class="btn btn-danger" onclick="del()" type="button">Delete</button>
             
-                <h4 class='q_title'> <?php echo htmlentities($row['question_title']) ?> </h4> 
+                <br><br>
             
-                <button id="edit" class="btn btn-primary" onclick="edit('q_title')" type="button">Edit</button>
-                <button id="save" class="btn btn-primary" onclick="save('q_title')" type="button">Save</button>
+                <h4 class='q_title' id="q_title"> <?php echo htmlentities($row['question_title']) ?> </h4>
+            
+                <input type="text" class="form-control" name = "question_title" id="question_title" placeholder="Example question" style="display:none">
+
+            
+                <button id="edit" class="btn btn-primary" onclick="edit_title('q_title')" type="button">Edit</button>
+                <button id="save" class="btn btn-primary" onclick="save_title('q_title')" type="button">Save</button>
                 
                 <br><br>
             
@@ -47,6 +52,41 @@
         </div>
         
         <script>
+            
+            function decodeHtml(html) {
+                var txt = document.createElement("textarea");
+                txt.innerHTML = html;
+                return txt.value;
+            }
+            
+            function htmlEntities(str) {
+                return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+            }
+            
+            function edit_title() {
+                
+                document.getElementById('question_title').style.display = 'block';
+                
+                document.getElementById('q_title').style.display = 'none';
+                
+                document.getElementById('question_title').value = decodeHtml(document.getElementById('q_title').innerHTML)
+                
+            }
+            
+            function save_title() {
+                
+                var makrup = document.getElementById('question_title').value
+                
+                var qid =  "<?php echo $_GET['qid']; ?>";
+                
+                $.post('./update_question.php', {'question': makrup, "qid": qid, 't_or_d': 0 }, function(response){})
+                
+                document.getElementById('q_title').style.display = 'block';
+                
+                document.getElementById('q_title').innerHTML = htmlEntities(makrup)
+                
+                document.getElementById('question_title').style.display = 'none';
+            }
         
             var edit = function(cls) {
               $('.'+cls).summernote({focus: true});
@@ -55,7 +95,6 @@
             var save = function(cls) {
               var qid =  "<?php echo $_GET['qid']; ?>";
               var makrup = $('.'+cls).summernote('code');
-                console.log(makrup)
                 if(cls == 'q_title'){
                     $.post('./update_question.php', {'question': makrup, "qid": qid, 't_or_d': 0 }, function(response){})
                 }

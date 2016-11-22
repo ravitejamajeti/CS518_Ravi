@@ -1,8 +1,9 @@
+<!DOCTYPE html>
 <html>
 
     <head>
     
-        <title>Home Page</title>
+        <title>Profile Page</title>
         
         <?php include 'header.php' ?>
         
@@ -20,10 +21,10 @@
         <div class="container">
             <div class="row">
                 <div class ='col-md-4'> 
-                    <img width='100' height='100' src='./uploads/<?php echo $_GET['uname']; ?>' onerror= 'this.src="./uploads/defaultIcon.png";' /> 
+                    <img width='100' height='100' src='./uploads/<?php echo $_GET['uname']; ?>' alt='No Image Available' onerror= 'this.src="./uploads/defaultIcon.png";' /> 
                     <br><br>
                     <?php if($_SESSION['username'] == $_GET['uname']) {?>
-                    <form action="" method="post" enctype="multipart/form-data">
+                    <form method="post" enctype="multipart/form-data">
                         <input type="file" name="file">
                         <input type="submit" name="submit">
                     </form>
@@ -71,7 +72,7 @@
                         <span style="background-color: #4682B4; color:white; text-align: center;  border-radius: 3px; box-shadow: 0 0 6px #ccc;">Answers</span><br>
                         <span style="position:relative; left:10px;"> <?php echo $row['views']; ?></span>
                         </div>
-                        <a href="display_question.php?qid= <?php echo $row['qid']; ?> "rel="tooltip" data-html="true" title = "" onmouseover="answer_tooltip(this.id)" class = "question_hyperlink col-md-9 red-tooltip" id = "<?php echo $row['qid']; ?>" > <?php echo htmlentities($row['question_title']); ?></a>
+                        <a href="display_question.php?qid=<?php echo $row['qid']; ?> " data-rel="tooltip" data-html="true" title = "" onmouseover="answer_tooltip(this.id)" class = "question_hyperlink col-md-9 red-tooltip" id = "<?php echo $row['qid']; ?>" > <?php echo htmlentities($row['question_title']); ?></a>
                         </div>
                         <br><br>
                         <div class="row">
@@ -91,7 +92,7 @@
         <script>
             
             $(document).ready(function() {
-                $('a[rel=tooltip]').tooltip();
+                $('a[data-rel=tooltip]').tooltip();
             });
             
             function answer_tooltip(qid) {
@@ -105,7 +106,8 @@
             
         </script>
         
+        <div class="footer"></div>
     </body>
-    <div class="footer"></div>
+    
 
 </html>

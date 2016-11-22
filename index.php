@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
 
     <head>
@@ -14,7 +15,7 @@
         
         <div class="container">
             
-            <h3>Recent Questions</h3>
+            <h3>Top Questions</h3>
             <hr>
             <br>
 
@@ -43,11 +44,11 @@
                         <span style="background-color: #4682B4; color:white; text-align: center;  border-radius: 3px; box-shadow: 0 0 6px #ccc;">Answers</span><br>
                         <span style="position:relative; left:10px;"> <?php echo $row['views']; ?></span>
                         </div>
-                        <a href="display_question.php?qid= <?php echo $row['qid']; ?> "rel="tooltip" data-html="true" title = "" onmouseover="answer_tooltip(this.id)" class = "question_hyperlink col-md-9 red-tooltip" id = "<?php echo $row['qid']; ?>" > <?php echo htmlentities($row['question_title']); ?></a>
+                        <a href="display_question.php?qid=<?php echo $row['qid']; ?> " data-rel="tooltip" data-html="true" title = "" onmouseover="answer_tooltip(this.id)" class = "question_hyperlink col-md-9 red-tooltip" id = "<?php echo $row['qid']; ?>" > <?php echo htmlentities($row['question_title']); ?></a>
                         </div>
                         <br><br>
                         <div class='row'>
-                        <div class='col-sm-1 col-sm-offset-8'><img width='60' height='60' src='./uploads/<?php echo htmlentities($row['qnd_user']) ?>' onerror= 'this.src="./uploads/defaultIcon.png";' /> </div>
+                        <div class='col-sm-1 col-sm-offset-8'><img width='60' height='60' src='./uploads/<?php echo htmlentities($row['qnd_user']) ?>' alt='No Image Available' onerror= 'this.src="./uploads/defaultIcon.png";' /> </div>
                             <div class='col-sm-3'><span class='asked_by'>asked by </span><a href='profile.php?uname=<?php echo htmlentities($row['qnd_user']) ?>'> <?php echo htmlentities($row['qnd_user']) ?> </a><br><span class='asked_by'>User Score - <?php echo $row1['score']; ?></span ><br><span class='asked_by'><i class='fa fa-clock-o' aria-hidden='true'></i> on <?php echo htmlentities($row['q_created']) ?></span></div>
                         </div>
                         <hr>
@@ -60,7 +61,7 @@
         <script>
             
             $(document).ready(function() {
-                $('a[rel=tooltip]').tooltip();
+                $('a[data-rel=tooltip]').tooltip();
             });
             
             function answer_tooltip(qid) {
@@ -74,8 +75,8 @@
             
         </script>
         
+        <div class="footer"></div>
+        
     </body>
-    
-    <div class="footer"></div>
 
 </html>

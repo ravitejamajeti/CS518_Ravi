@@ -49,13 +49,18 @@
 
         $start = ($page - 1) * $per_page;
         
-        $query = "SELECT user_name,score from users order by user_name limit $start, $per_page";
+        $query = "SELECT user_name,score from users order by score desc limit $start, $per_page";
         
         if($result = mysqli_query($link, $query)){
-            while($row = mysqli_fetch_array($result)) { ?>
+            while($row = mysqli_fetch_array($result)) { 
+        
+                $query1 = "select count(qid) from questions where qnd_user = '".$row['user_name']."'";
+                $result1 = mysqli_query($link, $query1);
+                $row1 = mysqli_fetch_array($result1);
+        ?>
                 <div class="row">
                     <div class='col-sm-1'><img width='60' height='60' src='./uploads/<?php echo htmlentities($row[0]) ?>' onerror= 'this.src="./uploads/defaultIcon.png";' /></div><div class="col-sm-3"><a href='admin_users_profile.php?uname=<?php echo htmlentities($row[0]) ?>'> <?php echo htmlentities($row[0]) ?> </a><br><span>Score - <?php echo $row['score']?></span>
-                    <br><span>Questions Count - <?php echo $row['score']?></span><br><span>Answers Count - <?php echo $row['score']?></span></div> 
+                    <br><span>Questions Count - <?php echo $row1[0]?></span><br><span>Answers Count - <?php echo $row['score']?></span></div> 
                 </div>
                 <br>
              <?php  
@@ -64,16 +69,22 @@
     ?>
         
     <div class="row">
-        <div class="col-sm-8"></div>
-        <div class="col-sm-4">
+        <div class="col-sm-7"></div>
+        <div class="col-sm-5">
             <ul class="pagination">
+                <li><a href="?page=1&qpage=<?php echo $_GET['qpage']; ?>">First</a></li>
                 <?php if($_GET['page'] > 1) { ?>
               <li><a href="?page= <?php $inc_page = $_GET['page'] - 1; echo $inc_page ?>&qpage=<?php echo $_GET['qpage']; ?>">Previous</a></li>
+                <?php } else { ?>
+                <li><a>Previous</a></li>
                 <?php } ?>
               <li><a href="?page=<?php echo $_GET['page']; ?>&qpage=<?php echo $_GET['qpage']; ?>"><?php echo $_GET['page']; ?></a></li>
                 <?php if($_GET['page'] < $pages) { ?>
               <li><a href="?page= <?php $inc_page = $_GET['page'] + 1; echo $inc_page ?>&qpage=<?php echo $_GET['qpage']; ?>">Next</a></li>
+                <?php } else { ?>
+                <li><a>Next</a></li>
                 <?php } ?>
+                <li><a href="?page=<?php echo $pages; ?>&qpage=<?php echo $_GET['qpage']; ?>">Last - <?php echo $pages; ?></a></li>
             </ul>
         </div>
     </div>
@@ -119,16 +130,22 @@
         ?>
         
         <div class="row">
-        <div class="col-sm-8"></div>
-        <div class="col-sm-4">
+        <div class="col-sm-7"></div>
+        <div class="col-sm-5">
             <ul class="pagination">
+                <li><a href="?page=<?php echo $_GET['page']; ?>&qpage=1&q=1">First</a></li>
                 <?php if($_GET['qpage'] > 1) { ?>
               <li><a href="?page=<?php echo $_GET['page']; ?>&qpage= <?php $inc_page = $_GET['qpage'] - 1; echo $inc_page ?>&q=1">Previous</a></li>
+                <?php } else { ?>
+                <li><a>Previous</a></li>
                 <?php } ?>
               <li><a href="?page=<?php echo $_GET['page']; ?>&qpage=<?php echo $_GET['qpage']; ?>&q=1"><?php echo $_GET['qpage']; ?></a></li>
                 <?php if($_GET['qpage'] < $pages) { ?>
               <li><a href="?page=<?php echo $_GET['page']; ?>&qpage= <?php $inc_page = $_GET['qpage'] + 1; echo $inc_page ?>&q=1">Next</a></li>
+                <?php } else { ?>
+                <li><a>Next</a></li>
                 <?php } ?>
+                <li><a href="?page=<?php echo $_GET['page']; ?>&qpage=<?php echo $pages?>&q=1">Last - <?php echo $pages; ?></a></li>
             </ul>
         </div>
     </div>
@@ -141,6 +158,7 @@
     document.getElementById("admin").style.color = "steelblue";
 </script>
 
+    </div>
 </body>
 </html>
 

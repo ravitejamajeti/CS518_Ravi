@@ -51,8 +51,6 @@ if (isset($_SESSION['username'])) {
                 else{
                     $posted = false;
                 }
-                    
-            
             }
             
         ?>
@@ -83,7 +81,7 @@ if (isset($_SESSION['username'])) {
                     <div style="color:green"><?php if($_POST) {if($posted == true) { echo "Question Submitted Successfully"; } }?> </div>
                 </div>
             </form>
-                    
+            
         </div>
             
         <script>

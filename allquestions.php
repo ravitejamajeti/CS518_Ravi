@@ -28,16 +28,30 @@
             ?>
             
             <div class="row">
-                <div class="col-sm-8"></div>
-                <div class="col-sm-4">
+                <div class="col-sm-5"></div>
+                <div class="col-sm-7">
                     <ul class="pagination">
+                    <li><a href="?page=1">First</a></li>
                     <?php if($_GET['page'] > 1) { ?>
-                      <li><a href="?page= <?php $inc_page = $_GET['page'] - 1; echo $inc_page ?>">Previous</a></li>
-                        <?php } ?>
+                      <li><a href="?page=<?php $inc_page = $_GET['page'] - 1; echo $inc_page ?>">Previous</a></li>
+                        <?php } else { ?>
+                      <li><a href="#">Previous</a></li>
+                        <?php }?>
+                        <?php if($_GET['page'] > 2) { ?>
+                        <li><a href="?page=<?php echo $_GET['page'] - 2; ?>"><?php echo $_GET['page'] - 2; ?></a></li>
+                        <li><a href="?page=<?php echo $_GET['page'] - 1; ?>"><?php echo $_GET['page'] - 1; ?></a></li>
+                        <?php }?>
                       <li><a href="?page=<?php echo $_GET['page']; ?>"><?php echo $_GET['page']; ?></a></li>
+                        <?php if($_GET['page'] < $pages - 2) { ?>
+                        <li><a href="?page=<?php echo $_GET['page'] + 1; ?>"><?php echo $_GET['page'] + 1; ?></a></li>
+                        <li><a href="?page=<?php echo $_GET['page'] + 2; ?>"><?php echo $_GET['page'] + 2; ?></a></li>
+                        <?php }?>
                         <?php if($_GET['page'] < $pages) { ?>
-                      <li><a href="?page= <?php $inc_page = $_GET['page'] + 1; echo $inc_page ?>">Next</a></li>
-                        <?php } ?>
+                      <li><a href="?page=<?php $inc_page = $_GET['page'] + 1; echo $inc_page ?>">Next</a></li>
+                        <?php } else { ?>
+                      <li><a href="#">Next</a></li>
+                        <?php }?>
+                        <li><a href="?page=<?php echo $pages; ?>">Last - <?php echo $pages; ?></a></li>
                     </ul>
                 </div>
             </div>
@@ -82,7 +96,7 @@
                         <span style="background-color: #4682B4; color:white; text-align: center;  border-radius: 3px; box-shadow: 0 0 6px #ccc;">Answers</span><br>
                         <span style="position:relative; left:10px;"> <?php echo $row['views']; ?></span>
                         </div>
-                        <a href="display_question.php?qid= <?php echo $row['qid']; ?> "rel="tooltip" data-html="true" title = "" onmouseover="answer_tooltip(this.id)" class = "question_hyperlink col-md-9 red-tooltip" id = "<?php echo $row['qid']; ?>" > <?php echo htmlentities($row['question_title']); ?></a>
+                        <a href="display_question.php?qid=<?php echo $row['qid']; ?> "rel="tooltip" data-html="true" title = "" onmouseover="answer_tooltip(this.id)" class = "question_hyperlink col-md-9 red-tooltip" id = "<?php echo $row['qid']; ?>" > <?php echo htmlentities($row['question_title']); ?></a>
                         </div>
                         <br><br>
                         <div class='row'>
@@ -111,6 +125,8 @@
                 })
             }
             
+            document.getElementById("all").style.backgroundColor = "white";
+            document.getElementById("all").style.color = "steelblue";
         </script>
         
     </body>
