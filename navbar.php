@@ -31,7 +31,7 @@
                         <li><a href='logout.php' class='white'><span class='glyphicon glyphicon-log-in'></span> Logout</a></li>
                      <?php }
                   ?>
-                  <li><a href="help.php" id="ask" class="white">Help</a></li>
+                  <li><a href="help.php" class="white">Help</a></li>
               </ul>
             </div>
           </div>

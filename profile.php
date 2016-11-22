@@ -4,6 +4,7 @@
     <head>
     
         <title>Profile Page</title>
+        <meta charset="UTF-8">
         
         <?php include 'header.php' ?>
         
