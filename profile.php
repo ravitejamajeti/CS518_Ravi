@@ -16,7 +16,21 @@
         
         <?php 
             if(isset($_POST['submit'])){
+                
+                $target_dir = "uploads/";
+                
+                $target_file = $target_dir . basename($_FILES["file"]["name"]);
+                
+                $imageFileType = pathinfo($target_file,PATHINFO_EXTENSION);
+                
+                if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
+                && $imageFileType != "gif" ) {
+                    echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
+                    $uploadOk = 0;
+                }
+                else {
                 move_uploaded_file($_FILES['file']['tmp_name'],"uploads/".$_SESSION['username']);   
+                }
             }
         ?>
         <div class="container">
