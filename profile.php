@@ -23,12 +23,14 @@
                 <div class ='col-md-4'> 
                     <img width='100' height='100' src='./uploads/<?php echo $_GET['uname']; ?>' alt='No Image Available' onerror= 'this.src="./uploads/defaultIcon.png";' /> 
                     <br><br>
-                    <?php if($_SESSION['username'] == $_GET['uname']) {?>
-                    <form method="post" enctype="multipart/form-data">
-                        <input type="file" name="file">
-                        <input type="submit" name="submit">
-                    </form>
-                    <?php } ?>
+                    <?php if (isset($_SESSION['username'])) { 
+                            if($_SESSION['username'] == $_GET['uname']) {?>
+                                <form method="post" enctype="multipart/form-data">
+                                    <input type="file" name="file">
+                                    <input type="submit" name="submit">
+                                </form>
+                            <?php } 
+                    } ?>
                 </div>
                 <div class ='col-md-8 prof_details'>Username - <?php echo $_GET['uname']; ?>
                     <br><br>

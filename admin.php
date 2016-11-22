@@ -57,10 +57,14 @@
                 $query1 = "select count(qid) from questions where qnd_user = '".$row['user_name']."'";
                 $result1 = mysqli_query($link, $query1);
                 $row1 = mysqli_fetch_array($result1);
+                
+                $query2 = "select count(aid) from answers where answered_user = '".$row['user_name']."'";
+                $result2 = mysqli_query($link, $query2);
+                $row2 = mysqli_fetch_array($result2);
         ?>
                 <div class="row">
-                    <div class='col-sm-1'><img width='60' height='60' src='./uploads/<?php echo htmlentities($row[0]) ?>' onerror= 'this.src="./uploads/defaultIcon.png";' /></div><div class="col-sm-3"><a href='admin_users_profile.php?uname=<?php echo htmlentities($row[0]) ?>'> <?php echo htmlentities($row[0]) ?> </a><br><span>Score - <?php echo $row['score']?></span>
-                    <br><span>Questions Count - <?php echo $row1[0]?></span><br><span>Answers Count - <?php echo $row['score']?></span></div> 
+                    <div class='col-sm-1'><img width='60' height='60' src='./uploads/<?php echo htmlentities($row[0]) ?>' onerror= 'this.src="./uploads/defaultIcon.png";' /></div><div class="col-sm-3"><a href='admin_users_profile.php?uname=<?php echo htmlentities($row[0]) ?>'> <?php echo htmlentities($row[0]) ?> </a><br><span>User Score - <?php echo $row['score']?></span>
+                    <br><span>Questions Count - <?php echo $row1[0]?></span><br><span>Answers Count - <?php echo $row2[0]?></span></div> 
                 </div>
                 <br>
              <?php  
@@ -120,8 +124,8 @@
         ?> 
             <a href='display_admin_ques.php?qid=<?php echo $row['qid'] ?>'> <?php echo htmlentities($row['question_title']) ?> </a> 
             <br> 
-            <span>Score - <?php echo $row['votes']; ?> </span> 
-            Asked By - <a href='admin_users_profile.php?uname=<?php echo htmlentities($row['qnd_user']) ?>'> <?php echo htmlentities($row['qnd_user']) ?> </a>
+            <span>Question Value : <?php echo $row['votes']; ?> </span> 
+            -- Asked By : <a href='admin_users_profile.php?uname=<?php echo htmlentities($row['qnd_user']) ?>'> <?php echo htmlentities($row['qnd_user']) ?> </a>
             <br><br> 
         <?php  
             }
