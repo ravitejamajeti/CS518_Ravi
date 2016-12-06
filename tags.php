@@ -14,64 +14,14 @@
         
         <div class="container">
             
-            <?php 
-            
-                $per_page = 10;
-            
-                $query = "SELECT count(*) from questions";
-                    
-                $result = mysqli_query($link, $query);
-            
-                $row = mysqli_fetch_array($result);
-            
-                $pages = ceil($row[0]/$per_page);
-            ?>
-            
-            <div class="row">
-                <div class="col-sm-5"></div>
-                <div class="col-sm-7">
-                    <ul class="pagination">
-                    <li><a href="?page=1">First</a></li>
-                    <?php if($_GET['page'] > 1) { ?>
-                      <li><a href="?page=<?php $inc_page = $_GET['page'] - 1; echo $inc_page ?>">Previous</a></li>
-                        <?php } else { ?>
-                      <li><a href="#">Previous</a></li>
-                        <?php }?>
-                        <?php if($_GET['page'] > 2) { ?>
-                        <li><a href="?page=<?php echo $_GET['page'] - 2; ?>"><?php echo $_GET['page'] - 2; ?></a></li>
-                        <li><a href="?page=<?php echo $_GET['page'] - 1; ?>"><?php echo $_GET['page'] - 1; ?></a></li>
-                        <?php }?>
-                      <li><a href="?page=<?php echo $_GET['page']; ?>"><?php echo $_GET['page']; ?></a></li>
-                        <?php if($_GET['page'] < $pages - 2) { ?>
-                        <li><a href="?page=<?php echo $_GET['page'] + 1; ?>"><?php echo $_GET['page'] + 1; ?></a></li>
-                        <li><a href="?page=<?php echo $_GET['page'] + 2; ?>"><?php echo $_GET['page'] + 2; ?></a></li>
-                        <?php }?>
-                        <?php if($_GET['page'] < $pages) { ?>
-                      <li><a href="?page=<?php $inc_page = $_GET['page'] + 1; echo $inc_page ?>">Next</a></li>
-                        <?php } else { ?>
-                      <li><a href="#">Next</a></li>
-                        <?php }?>
-                        <li><a href="?page=<?php echo $pages; ?>">Last - <?php echo $pages; ?></a></li>
-                    </ul>
-                </div>
-            </div>
-            
-            <h3>Recent Questions</h3>
+            <h3>Tagged Questions</h3>
             <hr>
             <br>
-
             <?php
-            
-                if(!isset($_GET['page'])) {
-                    header("location: allquestions.php?page=1");
-                }
-                else {
-                    $page = $_GET['page'];
-                }
-            
-                $start = ($page - 1) * $per_page;
 
-                $query = "SELECT * from questions order by qid desc limit $start, $per_page";
+                $query = "SELECT * from questions where tags like '".$_GET['tag']." %"."' or tags like '"."% ".$_GET['tag']." %"."' or tags like '"."% ".$_GET['tag']."' or tags = '".$_GET['tag']."'";
+            
+                echo mysqli_real_escape_string($link, $_GET['tag']);
 
                 if($result = mysqli_query($link, $query)) {
                     
@@ -132,9 +82,6 @@
                     console.log(response)
                 })
             }
-            
-            document.getElementById("all").style.backgroundColor = "white";
-            document.getElementById("all").style.color = "steelblue";
         </script>
         
     </body>

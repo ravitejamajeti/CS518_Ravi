@@ -41,7 +41,7 @@ if (isset($_SESSION['username'])) {
             
             if($_POST) {
 
-                $query = "INSERT INTO questions (question, question_title, qnd_user, views, q_created) VALUES ('".mysqli_real_escape_string($link, $_POST['summernote'])."', '".mysqli_real_escape_string($link, $_POST['question_title'])."', '".mysqli_real_escape_string($link, $_SESSION['username'])."', 0, now())";
+                $query = "INSERT INTO questions (question, question_title, qnd_user, views, q_created,tags) VALUES ('".mysqli_real_escape_string($link, $_POST['summernote'])."', '".mysqli_real_escape_string($link, $_POST['question_title'])."', '".mysqli_real_escape_string($link, $_SESSION['username'])."', 0, now(), '".mysqli_real_escape_string($link, $_POST['tags'])."')";
 
                 $result = mysqli_query($link, $query);
                 
@@ -74,6 +74,9 @@ if (isset($_SESSION['username'])) {
                             <textarea id="summernote" name="summernote"></textarea>
                         </div>
                     </div>
+                    
+                    Tags : <input type="text" class="form-control" name = "tags" id="tags" placeholder="eg - c cpp java">
+                    
                     <div id="question_errors" style="color:red"></div>
                     <br>
                     <button type="submit" class="btn btn-primary nav-background white">Submit</button>

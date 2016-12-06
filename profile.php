@@ -29,20 +29,57 @@
                     $uploadOk = 0;
                 }
                 else {
-                move_uploaded_file($_FILES['file']['tmp_name'],"uploads/".$_SESSION['username']);   
+                    move_uploaded_file($_FILES['file']['tmp_name'],"uploads/".$_SESSION['username']);
+
+                    $query = "update users set grav_override = 1 where user_name = '".$_SESSION['username']."'";
+                    mysqli_query($link, $query);
                 }
+            }
+        
+            if(isset($_POST['del_prof'])){
+                unlink("uploads/".$_SESSION['username']);
+                $query = "update users set grav_override = 0 where user_name = '".$_SESSION['username']."'";
+                    mysqli_query($link, $query);
             }
         ?>
         <div class="container">
             <div class="row">
-                <div class ='col-md-4'> 
-                    <img width='100' height='100' src='./uploads/<?php echo $_GET['uname']; ?>' alt='No Image Available' onerror= 'this.src="./uploads/defaultIcon.png";' /> 
+                <div class ='col-md-4'>
+                    
+                    <?php 
+                    
+                        $query = "select * from users where user_name = '".$_SESSION['username']."'";
+                        $result = mysqli_query($link, $query);
+                        $row = mysqli_fetch_array($result);
+                        
+                            
+                    
+                        if($row['grav_override'] == 1) { ?>
+                    
+                            <img width='100' height='100' src='./uploads/<?php echo $_GET['uname']; ?>' alt='No Image Available' onerror= 'this.src="./uploads/defaultIcon.png";' /> 
+                        <?php } else { 
+                    
+                            $gravcheck = "http://www.gravatar.com/avatar/".md5( strtolower( trim( $row['email'] ) ) )."?d=404";
+                    
+                            $response = get_headers($gravcheck);
+                            
+                            
+                            
+                            if ($response[0] != "HTTP/1.1 404 Not Found"){ ?>
+                                <img src="https://www.gravatar.com/avatar/<?php echo md5( strtolower( trim( $row['email'] ) ) ); ?>" />
+                            <?php } 
+                            else { ?>
+                                <img width='100' height='100' src='./uploads/<?php echo $_GET['uname']; ?>' alt='No Image Available' onerror= 'this.src="./uploads/defaultIcon.png";' /> 
+                            <?php } } ?>
+                    
+                    
                     <br><br>
                     <?php if (isset($_SESSION['username'])) { 
                             if($_SESSION['username'] == $_GET['uname']) {?>
                                 <form method="post" enctype="multipart/form-data">
                                     <input type="file" name="file">
                                     <input type="submit" name="submit">
+                                    <button type="delete" name="del_prof">Delete Picture</button>
                                 </form>
                             <?php } 
                     } ?>
