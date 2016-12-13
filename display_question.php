@@ -43,10 +43,32 @@
                 
                 $row = mysqli_fetch_array($result);
                 
-                $query_user = "SELECT score from users where user_name = '".$row['qnd_user']."'";
+                $query_user = "SELECT * from users where user_name = '".$row['qnd_user']."'";
                 $result_user = mysqli_query($link, $query_user);
                 $row_user = mysqli_fetch_array($result_user);
                 $score = $row_user['score'];
+                
+                if($row_user['grav_override'] == 1) { 
+            
+                    $img_src = "uploads/".$row_user['pic_name'];    
+                } 
+                else { 
+
+                    $gravcheck = "http://www.gravatar.com/avatar/".md5( strtolower( trim( $row_user['email'] ) ) )."?d=404";
+
+                    $response = get_headers($gravcheck);
+
+
+
+                    if ($response[0] != "HTTP/1.1 404 Not Found"){ 
+
+                        $img_src = "https://www.gravatar.com/avatar/".md5( strtolower( trim( $row_user['email'] ) ) );
+                    } 
+                    else { 
+
+                        $img_src = "uploads/".$row_user['pic_name'];
+                     } 
+                }
                 
                 $upvote = 0;
                     $downvote = 0;
@@ -99,7 +121,7 @@
                     </div>
                     <br><br>
                     <div class='row'>
-                        <div class='col-sm-1 col-sm-offset-8'><img width='60' height='60' src='./uploads/<?php echo htmlentities($row['qnd_user']) ?>' alt='No Image Available' onerror= 'this.src="./uploads/defaultIcon.png";' /> </div>
+                        <div class='col-sm-1 col-sm-offset-8'><img width='60' height='60' src='<?php echo $img_src; ?>' alt='No Image Available' onerror= 'this.src="./uploads/defaultIcon.png";' /> </div>
                             <div class='col-sm-3'><span class='asked_by'>asked by </span><a href='profile.php?uname=<?php echo htmlentities($row['qnd_user']) ?>'> <?php echo htmlentities($row['qnd_user']) ?> </a>
                                 <br>
                                 <span class='asked_by'>User Score - <?php echo $score; ?></span>
@@ -124,7 +146,7 @@
                     </div>
                     <br><br>
                     <div class='row'>
-                        <div class='col-sm-1 col-sm-offset-8'><img width='60' height='60' src='./uploads/<?php echo htmlentities($row['qnd_user']) ?>' alt='No Image Available' onerror= 'this.src="./uploads/defaultIcon.png";' /> </div>
+                        <div class='col-sm-1 col-sm-offset-8'><img width='60' height='60' src='<?php echo $img_src; ?>' alt='No Image Available' onerror= 'this.src="./uploads/defaultIcon.png";' /> </div>
                             <div class='col-sm-3'><span class='asked_by'>asked by </span><a href='profile.php?uname=<?php echo htmlentities($row['qnd_user']) ?>'> <?php echo htmlentities($row['qnd_user']) ?> </a>
                                 <br>
                                 <span class='asked_by'>User Score - <?php echo $score; ?></span>
@@ -230,11 +252,34 @@
                 $acount = 1;
                 while($row = mysqli_fetch_array($result)) {
                     
-                    $query_user = "SELECT score from users where user_name = '".$row['answered_user']."'";
+                    $query_user = "SELECT * from users where user_name = '".$row['answered_user']."'";
                     $result_user = mysqli_query($link, $query_user);
                     $row_user = mysqli_fetch_array($result_user);
+                    $user_image = $row_user['pic_name'];
                     
                     $score = $row_user['score'];
+                    
+                    if($row_user['grav_override'] == 1) { 
+            
+                        $img_src = "uploads/".$row_user['pic_name'];    
+                    } 
+                    else { 
+
+                        $gravcheck = "http://www.gravatar.com/avatar/".md5( strtolower( trim( $row_user['email'] ) ) )."?d=404";
+
+                        $response = get_headers($gravcheck);
+
+
+
+                        if ($response[0] != "HTTP/1.1 404 Not Found"){ 
+
+                            $img_src = "https://www.gravatar.com/avatar/".md5( strtolower( trim( $row_user['email'] ) ) );
+                        } 
+                        else { 
+
+                            $img_src = "uploads/".$row_user['pic_name'];
+                         } 
+                    }
                     
                     $aupid = "$acount"."u";
                     $adownid = "$acount"."d";
@@ -288,7 +333,7 @@
                             echo "</div>";
                             echo "<br><br>";
                             echo "<div class='row'>"; ?>
-                            <div class='col-sm-1 col-sm-offset-8'><img width='60' height='60' src='./uploads/<?php echo $row['answered_user']; ?>' alt='No Image Available' onerror= 'this.src="./uploads/defaultIcon.png";' /> </div>
+                            <div class='col-sm-1 col-sm-offset-8'><img width='60' height='60' src='<?php echo $img_src; ?>' alt='No Image Available' onerror= 'this.src="./uploads/defaultIcon.png";' /> </div>
                             <?php
                             echo "<div class='col-sm-3'><span class='asked_by'>answered by <a href='profile.php?uname=".htmlentities($row['answered_user'])."'>".htmlentities($row['answered_user'])."</a></span><br>";
                             echo "<span class='asked_by'>Score - ".$score."</span><br>";
@@ -341,7 +386,7 @@
                             echo "</div>";
                             echo "<br><br>";
                             echo "<div class='row'>"; ?>
-                            <div class='col-sm-1 col-sm-offset-8'><img width='60' height='60' src='./uploads/<?php echo $row['answered_user']; ?>' alt='No Image Available' onerror= 'this.src="./uploads/defaultIcon.png";' /> </div>
+                            <div class='col-sm-1 col-sm-offset-8'><img width='60' height='60' src='<?php echo $img_src; ?>' alt='No Image Available' onerror= 'this.src="./uploads/defaultIcon.png";' /> </div>
                             <?php
                             echo "<div class='col-sm-3'><span class='asked_by'>answered by <a href='profile.php?uname=".htmlentities($row['answered_user'])."'>".htmlentities($row['answered_user'])."</a></span><br>";
                             echo "<span class='asked_by'>Score - ".$score."</span><br>";
@@ -372,7 +417,7 @@
                             echo "</div>";
                             echo "<br><br>";
                             echo "<div class='row'>"; ?>
-                            <div class='col-sm-1 col-sm-offset-8'><img width='60' height='60' src='./uploads/<?php echo $row['answered_user']; ?>' alt='No Image Available' onerror= 'this.src="./uploads/defaultIcon.png";' /> </div>
+                            <div class='col-sm-1 col-sm-offset-8'><img width='60' height='60' src='<?php echo $img_src; ?>' alt='No Image Available' onerror= 'this.src="./uploads/defaultIcon.png";' /> </div>
                             <?php
                             echo "<div class='col-sm-3'><span class='asked_by'>answered by <a href='profile.php?uname=".htmlentities($row['answered_user'])."'>".htmlentities($row['answered_user'])."</a></span><br>";
                             echo "<span>Score - ".$score."</span><br>";
@@ -425,7 +470,7 @@
                             echo "</div>";
                             echo "<br><br>";
                             echo "<div class='row'>"; ?>
-                            <div class='col-sm-1 col-sm-offset-8'><img width='60' height='60' src='./uploads/<?php echo $row['answered_user']; ?>' alt='No Image Available' onerror= 'this.src="./uploads/defaultIcon.png";' /> </div>
+                            <div class='col-sm-1 col-sm-offset-8'><img width='60' height='60' src='<?php echo $img_src; ?>' alt='No Image Available' onerror= 'this.src="./uploads/defaultIcon.png";' /> </div>
                             <?php
                             echo "<div class='col-sm-3'><span class='asked_by'>answered by <a href='profile.php?uname=".htmlentities($row['answered_user'])."'>".htmlentities($row['answered_user'])."</a></span><br>";
                             echo "<span class='asked_by'>Score - ".$score."</span><br>";

@@ -72,16 +72,42 @@
                 $start = ($page - 1) * $per_page;
 
                 $query = "SELECT * from questions order by qid desc limit $start, $per_page";
+            
+                //$rows = [];
 
                 if($result = mysqli_query($link, $query)) {
                     
                     while($row = mysqli_fetch_array($result)) { 
                     
-                        $query1 = "SELECT score from users where user_name = '".$row['qnd_user']."'";
+                        $query1 = "SELECT * from users where user_name = '".$row['qnd_user']."'";
                         $result1 = mysqli_query($link, $query1);
                         $row1 = mysqli_fetch_array($result1);
+                        //$rows[] = $row;
+                        
                             
-                    ?>          
+                    
+                        if($row1['grav_override'] == 1) { 
+            
+                            $img_src = "uploads/".$row1['pic_name'];    
+                        } 
+                        else { 
+                    
+                            $gravcheck = "http://www.gravatar.com/avatar/".md5( strtolower( trim( $row1['email'] ) ) )."?d=404";
+                    
+                            $response = get_headers($gravcheck);
+                            
+                            
+                            
+                            if ($response[0] != "HTTP/1.1 404 Not Found"){ 
+                            
+                                $img_src = "https://www.gravatar.com/avatar/".md5( strtolower( trim( $row1['email'] ) ) );
+                            } 
+                            else { 
+                            
+                                $img_src = "uploads/".$row1['pic_name'];
+                             } 
+                        }
+                    ?>
                     
                         <div class='row'>
                         <div class ='col-md-1'>
@@ -108,7 +134,7 @@
                             
                             <?php }
                         ?></div>
-                        <div class='col-sm-1'><img width='60' height='60' src='./uploads/<?php echo htmlentities($row['qnd_user']) ?>' onerror= 'this.src="./uploads/defaultIcon.png";' /> </div>
+                        <div class='col-sm-1'><img width='60' height='60' src='<?php echo $img_src; ?>' onerror= 'this.src="./uploads/defaultIcon.png";' /> </div>
                             <div class='col-sm-3'><span class='asked_by'>asked by </span><a href='profile.php?uname=<?php echo htmlentities($row['qnd_user']) ?>'> <?php echo htmlentities($row['qnd_user']) ?> </a><br><span class='asked_by'>User Score - <?php echo $row1['score']; ?></span ><br><span class='asked_by'><i class='fa fa-clock-o' aria-hidden='true'></i> on <?php echo htmlentities($row['q_created']) ?></span></div>
                         </div>
                         <hr>

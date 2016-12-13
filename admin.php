@@ -49,10 +49,32 @@
 
         $start = ($page - 1) * $per_page;
         
-        $query = "SELECT user_name,score from users order by score desc limit $start, $per_page";
+        $query = "SELECT * from users order by score desc limit $start, $per_page";
         
         if($result = mysqli_query($link, $query)){
-            while($row = mysqli_fetch_array($result)) { 
+            while($row = mysqli_fetch_array($result)) {
+                
+                if($row['grav_override'] == 1) { 
+            
+                    $img_src = "uploads/".$row['pic_name'];    
+                } 
+                else { 
+
+                    $gravcheck = "http://www.gravatar.com/avatar/".md5( strtolower( trim( $row['email'] ) ) )."?d=404";
+
+                    $response = get_headers($gravcheck);
+
+
+
+                    if ($response[0] != "HTTP/1.1 404 Not Found"){ 
+
+                        $img_src = "https://www.gravatar.com/avatar/".md5( strtolower( trim( $row['email'] ) ) );
+                    } 
+                    else { 
+
+                        $img_src = "uploads/".$row['pic_name'];
+                    } 
+                }
         
                 $query1 = "select count(qid) from questions where qnd_user = '".$row['user_name']."'";
                 $result1 = mysqli_query($link, $query1);
@@ -63,7 +85,7 @@
                 $row2 = mysqli_fetch_array($result2);
         ?>
                 <div class="row">
-                    <div class='col-sm-1'><img width='60' height='60' src='./uploads/<?php echo htmlentities($row[0]) ?>' onerror= 'this.src="./uploads/defaultIcon.png";' /></div><div class="col-sm-3"><a href='admin_users_profile.php?uname=<?php echo htmlentities($row[0]) ?>'> <?php echo htmlentities($row[0]) ?> </a><br><span>User Score - <?php echo $row['score']?></span>
+                    <div class='col-sm-1'><img width='60' height='60' src='<?php echo $img_src; ?>' onerror= 'this.src="./uploads/defaultIcon.png";' /></div><div class="col-sm-3"><a href='profile.php?uname=<?php echo htmlentities($row['user_name']) ?>'> <?php echo htmlentities($row['user_name']) ?> </a><br><span>User Score - <?php echo $row['score']?></span>
                     <br><span>Questions Count - <?php echo $row1[0]?></span><br><span>Answers Count - <?php echo $row2[0]?></span></div> 
                 </div>
                 <br>
@@ -125,7 +147,7 @@
             <a href='display_admin_ques.php?qid=<?php echo $row['qid'] ?>'> <?php echo htmlentities($row['question_title']) ?> </a> 
             <br> 
             <span>Question Value : <?php echo $row['votes']; ?> </span> 
-            -- Asked By : <a href='admin_users_profile.php?uname=<?php echo htmlentities($row['qnd_user']) ?>'> <?php echo htmlentities($row['qnd_user']) ?> </a>
+            -- Asked By : <a href='profile.php?uname=<?php echo htmlentities($row['qnd_user']) ?>'> <?php echo htmlentities($row['qnd_user']) ?> </a>
             <br><br> 
         <?php  
             }
@@ -162,6 +184,7 @@
     document.getElementById("admin").style.color = "steelblue";
 </script>
 
+    </div>
     </div>
 </body>
 </html>

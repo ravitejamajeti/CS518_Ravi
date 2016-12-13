@@ -15,6 +15,17 @@
         <?php include 'config.php'; include 'db_connect.php'; include 'navbar.php'; ?>
         
         <?php 
+        
+            function generateRandomString($length = 10) {
+                $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+                $charactersLength = strlen($characters);
+                $randomString = '';
+                for ($i = 0; $i < $length; $i++) {
+                    $randomString .= $characters[rand(0, $charactersLength - 1)];
+                }
+                return $randomString;
+            }
+        
             if(isset($_POST['submit'])){
                 
                 $target_dir = "uploads/";
@@ -29,17 +40,25 @@
                     $uploadOk = 0;
                 }
                 else {
-                    move_uploaded_file($_FILES['file']['tmp_name'],"uploads/".$_SESSION['username']);
+                    
+                    $pic_name = generateRandomString();
+                    move_uploaded_file($_FILES['file']['tmp_name'],"uploads/".$pic_name);
 
                     $query = "update users set grav_override = 1 where user_name = '".$_SESSION['username']."'";
+                    mysqli_query($link, $query);
+                    $query = "update users set pic_name = '".$pic_name."' where user_name = '".$_SESSION['username']."'";
                     mysqli_query($link, $query);
                 }
             }
         
             if(isset($_POST['del_prof'])){
-                unlink("uploads/".$_SESSION['username']);
+                $query = "select * from users where user_name = '".$_SESSION['username']."'";
+                $result = mysqli_query($link, $query);
+                $row = mysqli_fetch_array($result);
+                unlink("uploads/".$row['pic_name']);
+                
                 $query = "update users set grav_override = 0 where user_name = '".$_SESSION['username']."'";
-                    mysqli_query($link, $query);
+                mysqli_query($link, $query);
             }
         ?>
         <div class="container">
@@ -48,7 +67,7 @@
                     
                     <?php 
                     
-                        $query = "select * from users where user_name = '".$_SESSION['username']."'";
+                        $query = "select * from users where user_name = '".$_GET['uname']."'";
                         $result = mysqli_query($link, $query);
                         $row = mysqli_fetch_array($result);
                         
@@ -56,8 +75,9 @@
                     
                         if($row['grav_override'] == 1) { ?>
                     
-                            <img width='100' height='100' src='./uploads/<?php echo $_GET['uname']; ?>' alt='No Image Available' onerror= 'this.src="./uploads/defaultIcon.png";' /> 
-                        <?php } else { 
+                            <img width='100' height='100' src='./uploads/<?php echo $row['pic_name']; ?>' alt='No Image Available' onerror= 'this.src="./uploads/defaultIcon.png";' /> 
+                        <?php } 
+                        else { 
                     
                             $gravcheck = "http://www.gravatar.com/avatar/".md5( strtolower( trim( $row['email'] ) ) )."?d=404";
                     
@@ -69,8 +89,8 @@
                                 <img src="https://www.gravatar.com/avatar/<?php echo md5( strtolower( trim( $row['email'] ) ) ); ?>" />
                             <?php } 
                             else { ?>
-                                <img width='100' height='100' src='./uploads/<?php echo $_GET['uname']; ?>' alt='No Image Available' onerror= 'this.src="./uploads/defaultIcon.png";' /> 
-                            <?php } } ?>
+                                <img width='100' height='100' src='./uploads/<?php echo $row['pic_name']; ?>' alt='No Image Available' onerror= 'this.src="./uploads/defaultIcon.png";' /> 
+                        <?php } } ?>
                     
                     
                     <br><br>
