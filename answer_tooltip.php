@@ -4,7 +4,7 @@
         
         include 'config.php';
         
-        $query = "SELECT answer from answers where qid = '".$_POST['qid']."' limit 1";
+        $query = "SELECT answer from answers where qid = '".$_POST['qid']."' order by marked desc, votes desc limit 1";
         
         mysqli_query($link, $query);
 

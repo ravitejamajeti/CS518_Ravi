@@ -10,6 +10,7 @@
               <ul class="nav navbar-nav">
                 <li><a href="ask_question.php" id="ask" class="white">Ask Question</a></li>
                 <li><a href="allquestions.php?page=1" id="all" class="white">All Questions</a></li>
+                <li><a href="world.php" id="all" class="white">Live Questions</a></li>
             <?php
                 if (isset($_SESSION['username'])) { ?>
                     <li><a href="my_questions.php" id="my_question" class="white">Asked</a></li> 
