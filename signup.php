@@ -150,6 +150,12 @@ hr{
         </style>
         
         <script>
+            
+            function ValidateEmail(mail)   
+            {  
+             
+            }  
+
             function validateForm() {
                 
                 var illegalChars = /\W/; 
@@ -182,6 +188,14 @@ hr{
                     alert(error);
                     return false;
                 }
+                
+                if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(document.forms["myForm"]["email"].value))
+                {  
+                    return true
+                }  
+                
+                alert("You have entered an invalid email address!")  
+                return false 
             }
             
             function navigatetologin() {
@@ -215,7 +229,7 @@ hr{
                     $invalid = "1";
                 }
                 else {
-                    $query = "INSERT INTO users (user_name, password) VALUES ('".mysqli_real_escape_string($link, $_POST['username'])."', '".mysqli_real_escape_string($link, $_POST['create_password'])."')";
+                    $query = "INSERT INTO users (user_name, password,email) VALUES ('".mysqli_real_escape_string($link, $_POST['username'])."', '".mysqli_real_escape_string($link, $_POST['create_password'])."','".mysqli_real_escape_string($link, $_POST['email'])."')";
                     
                     mysqli_query($link, $query);
                     
@@ -239,6 +253,8 @@ hr{
                 <input type="password" id="inputPassword" class="login_box" placeholder="******" name="create_password" required>
                 <p class="input_title">Confirm Password</p>
                 <input type="password" id="inputPassword" class="login_box" placeholder="******" name="confirm_password" required>
+                <p class="input_title">Email</p>
+                <input type="text" id="inputEmail" class="login_box" placeholder="email_id@abc.com" name="email" required>
                 <div id="remember" class="checkbox">
                     <label>
                         
