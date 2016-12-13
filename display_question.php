@@ -137,7 +137,7 @@
                         <div class='col-sm-1'><img width='60' height='60' src='<?php echo $img_src; ?>' alt='No Image Available' onerror= 'this.src="./uploads/defaultIcon.png";' /> </div>
                             <div class='col-sm-3'><span class='asked_by'>asked by </span><a href='profile.php?uname=<?php echo htmlentities($row['qnd_user']) ?>'> <?php echo htmlentities($row['qnd_user']) ?> </a>
                                 <br>
-                                <span class='asked_by'>User Score - <?php echo $score; ?></span>
+                                <span class='asked_by'>User Score : <?php echo $score; ?></span>
                                 <br>
                                 <span class='asked_by'><i class='fa fa-clock-o' aria-hidden='true'></i> on <?php echo htmlentities($row['q_created']) ?></span></div>
                         </div>
@@ -170,7 +170,7 @@
                         <div class='col-sm-1'><img width='60' height='60' src='<?php echo $img_src; ?>' alt='No Image Available' onerror= 'this.src="./uploads/defaultIcon.png";' /> </div>
                             <div class='col-sm-3'><span class='asked_by'>asked by </span><a href='profile.php?uname=<?php echo htmlentities($row['qnd_user']) ?>'> <?php echo htmlentities($row['qnd_user']) ?> </a>
                                 <br>
-                                <span class='asked_by'>User Score - <?php echo $score; ?></span>
+                                <span class='asked_by'>User Score : <?php echo $score; ?></span>
                                 <br>
                                 <span class='asked_by'><i class='fa fa-clock-o' aria-hidden='true'></i> on <?php echo htmlentities($row['q_created']) ?></span>  </div>
                         </div>
@@ -362,7 +362,7 @@
                             <div class='col-sm-1 col-sm-offset-8'><img width='60' height='60' src='<?php echo $img_src; ?>' alt='No Image Available' onerror= 'this.src="./uploads/defaultIcon.png";' /> </div>
                             <?php
                             echo "<div class='col-sm-3'><span class='asked_by'>answered by <a href='profile.php?uname=".htmlentities($row['answered_user'])."'>".htmlentities($row['answered_user'])."</a></span><br>";
-                            echo "<span class='asked_by'>Score - ".$score."</span><br>";
+                            echo "<span class='asked_by'>Score : ".$score."</span><br>";
                             echo "<span class='asked_by'><i class='fa fa-clock-o' aria-hidden='true'></i> on </span>".$row['a_created']."";
                             echo "</div>";
                             echo "</div>";
@@ -415,7 +415,7 @@
                             <div class='col-sm-1 col-sm-offset-8'><img width='60' height='60' src='<?php echo $img_src; ?>' alt='No Image Available' onerror= 'this.src="./uploads/defaultIcon.png";' /> </div>
                             <?php
                             echo "<div class='col-sm-3'><span class='asked_by'>answered by <a href='profile.php?uname=".htmlentities($row['answered_user'])."'>".htmlentities($row['answered_user'])."</a></span><br>";
-                            echo "<span class='asked_by'>Score - ".$score."</span><br>";
+                            echo "<span class='asked_by'>Score : ".$score."</span><br>";
                             echo "<span class='asked_by'><i class='fa fa-clock-o' aria-hidden='true'></i> on </span>".$row['a_created']."";
                             echo "</div>";
                             echo "</div>";
@@ -446,7 +446,7 @@
                             <div class='col-sm-1 col-sm-offset-8'><img width='60' height='60' src='<?php echo $img_src; ?>' alt='No Image Available' onerror= 'this.src="./uploads/defaultIcon.png";' /> </div>
                             <?php
                             echo "<div class='col-sm-3'><span class='asked_by'>answered by <a href='profile.php?uname=".htmlentities($row['answered_user'])."'>".htmlentities($row['answered_user'])."</a></span><br>";
-                            echo "<span>Score - ".$score."</span><br>";
+                            echo "<span>Score : ".$score."</span><br>";
                             echo "<span class='asked_by'><i class='fa fa-clock-o' aria-hidden='true'></i> on </span>".$row['a_created']."";
                             echo "</div>";
                             echo "</div>";
@@ -499,7 +499,7 @@
                             <div class='col-sm-1 col-sm-offset-8'><img width='60' height='60' src='<?php echo $img_src; ?>' alt='No Image Available' onerror= 'this.src="./uploads/defaultIcon.png";' /> </div>
                             <?php
                             echo "<div class='col-sm-3'><span class='asked_by'>answered by <a href='profile.php?uname=".htmlentities($row['answered_user'])."'>".htmlentities($row['answered_user'])."</a></span><br>";
-                            echo "<span class='asked_by'>Score - ".$score."</span><br>";
+                            echo "<span class='asked_by'>Score : ".$score."</span><br>";
                             echo "<span class='asked_by'><i class='fa fa-clock-o' aria-hidden='true'></i> on </span>".$row['a_created']."";
                             echo "</div>";
                             echo "</div>";

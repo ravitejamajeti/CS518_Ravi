@@ -142,7 +142,7 @@
                             <?php }
                         ?></div>
                         <div class='col-sm-1'><img width='60' height='60' src='<?php echo $img_src; ?>' onerror= 'this.src="./uploads/defaultIcon.png";' /> </div>
-                            <div class='col-sm-3'><span class='asked_by'>asked by </span><a href='profile.php?uname=<?php echo htmlentities($row['qnd_user']) ?>'> <?php echo htmlentities($row['qnd_user']) ?> </a><br><span class='asked_by'>User Score - <?php echo $row1['score']; ?></span ><br><span class='asked_by'><i class='fa fa-clock-o' aria-hidden='true'></i> on <?php echo htmlentities($row['q_created']) ?></span></div>
+                            <div class='col-sm-3'><span class='asked_by'>asked by </span><a href='profile.php?uname=<?php echo htmlentities($row['qnd_user']) ?>'> <?php echo htmlentities($row['qnd_user']) ?> </a><br><span class='asked_by'>User Score : <?php echo $row1['score']; ?></span ><br><span class='asked_by'><i class='fa fa-clock-o' aria-hidden='true'></i> on <?php echo htmlentities($row['q_created']) ?></span></div>
                         </div>
                         <hr>
                         

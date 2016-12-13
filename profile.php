@@ -120,11 +120,8 @@
                         $result = mysqli_query($link, $query);
                         $row = mysqli_fetch_array($result);
                     ?>
-                    <span>Score - <?php echo $row[0] ?> </span>
-                    <br><br>
-                    <span>Questions Count</span>
-                    <br><br>
-                    <span>Answers Count</span>
+                    <span>Score : <?php echo $row[0] ?> </span>
+                    
                 </div>
             </div>
         </div>

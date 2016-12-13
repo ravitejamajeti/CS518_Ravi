@@ -89,7 +89,7 @@
                 $row2 = mysqli_fetch_array($result2);
         ?>
                 <div class="row">
-                    <div class='col-sm-1'><img width='60' height='60' src='<?php echo $img_src; ?>' onerror= 'this.src="./uploads/defaultIcon.png";' /></div><div class="col-sm-3"><a href='profile.php?uname=<?php echo htmlentities($row['user_name']) ?>'> <?php echo htmlentities($row['user_name']) ?> </a><br><span>User Score - <?php echo $row['score']?></span>
+                    <div class='col-sm-1'><img width='60' height='60' src='<?php echo $img_src; ?>' onerror= 'this.src="./uploads/defaultIcon.png";' /></div><div class="col-sm-3"><a href='profile.php?uname=<?php echo htmlentities($row['user_name']) ?>'> <?php echo htmlentities($row['user_name']) ?> </a><br><span>User Score : <?php echo $row['score']?></span>
                     <br><span>Questions Count - <?php echo $row1[0]?></span><br><span>Answers Count - <?php echo $row2[0]?></span></div> 
                 </div>
                 <br>
