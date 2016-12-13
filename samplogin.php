@@ -170,11 +170,13 @@ hr{
     
     <body>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src = 'https://www.google.com/recaptcha/api.js'></script>
         
         <?php
             include 'db_connect.php';
-            $invalid = true; 
+            $invalid = true;
+            $incaptcha = true;
 
             if($_POST)
             {
@@ -182,7 +184,29 @@ hr{
                 //echo "Password entered is : ".$_POST['password'];
 
                 $query = "SELECT * FROM users where user_name = '".mysqli_real_escape_string($link, $_POST['loginid'])."' and password = '".mysqli_real_escape_string($link, $_POST['password'])."'";
-
+                
+                
+                
+                if(isset($_POST['g-recaptcha-response'])){
+                    $captcha=$_POST['g-recaptcha-response'];
+                }
+                if(!$captcha){
+                    $incaptcha =false;
+                }
+                $secretKey = "6LeDAA4UAAAAAEz39NTiotc8pgCICv61Q3aK3zuc";
+                $ip = $_SERVER['REMOTE_ADDR'];
+                $response=file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=".$secretKey."&response=".$captcha."&remoteip=".$ip);
+                $responseKeys = json_decode($response,true);
+                if(intval($responseKeys["success"]) !== 1) {
+                    echo ' ';
+                } else {
+                        echo '';
+                }
+            
+                
+                if($incaptcha!=false)
+                {
+                    
                 if($result = mysqli_query($link, $query))
                 {
                     $row = mysqli_fetch_array($result);
@@ -198,8 +222,10 @@ hr{
                         $user = true;
                         ?> <script> location.replace("index.php"); </script> 
              <?php  }
+                     $invalid = false; 
                 }
-                $invalid = false;  
+                }
+                
             }
 
 ?>
@@ -221,13 +247,19 @@ hr{
                         
                     </label>
                 </div>
+                <div class="g-recaptcha" data-sitekey="6LeDAA4UAAAAAPieR3psL5uhXdFGzxiF4JU2xJ_1"></div>
+                <br>
                 <button class="btn btn-lg btn-primary" type="submit">Login</button>
                 <br>
                 <?php
                 if($invalid == false) {
                     echo "<font color='red'>Invalid username or password</font>";
                 }
-            ?>
+                if($incaptcha == false){
+                    echo "<font color ='red'><p>Please check the captcha form</p></font>";
+                }
+                ?>
+  
             </form>
         </div>
     </div>
