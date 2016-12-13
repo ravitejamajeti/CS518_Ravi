@@ -46,6 +46,15 @@
             
                 <div class='ques'> <?php echo $row['question']; ?> </div>
             
+                <div>Tags : <?php 
+                            $pieces = explode(" ", $row['tags']);
+                            foreach($pieces as $v){ ?>
+                            <a href='tags.php?tag=<?php echo $v ?>'> <?php echo $v." "; ?> </a>
+                            
+                            <?php }?>
+                </div>
+                <br>
+            
                 <button id="edit" class="btn btn-primary" onclick="edit('ques')" type="button">Edit</button>
                 <button id="save" class="btn btn-primary" onclick="save('ques')" type="button">Save</button>
                     

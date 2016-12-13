@@ -48,6 +48,7 @@
                 $row_user = mysqli_fetch_array($result_user);
                 $score = $row_user['score'];
                 
+                if($row_user['git_user'] == 0) { 
                 if($row_user['grav_override'] == 1) { 
             
                     $img_src = "uploads/".$row_user['pic_name'];    
@@ -68,7 +69,11 @@
 
                         $img_src = "uploads/".$row_user['pic_name'];
                      } 
+                }}
+                else {
+                    $img_src = 'https://github.com/'.$row_user['user_name'].'.png';
                 }
+                
                 
                 $upvote = 0;
                     $downvote = 0;
@@ -121,7 +126,15 @@
                     </div>
                     <br><br>
                     <div class='row'>
-                        <div class='col-sm-1 col-sm-offset-8'><img width='60' height='60' src='<?php echo $img_src; ?>' alt='No Image Available' onerror= 'this.src="./uploads/defaultIcon.png";' /> </div>
+                        <div class='col-sm-3'></div>
+                        <div class='col-sm-5'>Tags : <?php 
+                            $pieces = explode(" ", $row['tags']);
+                            foreach($pieces as $v){ ?>
+                            <a href='tags.php?tag=<?php echo $v ?>'> <?php echo $v." "; ?> </a>
+                            
+                            <?php }
+                        ?></div>
+                        <div class='col-sm-1'><img width='60' height='60' src='<?php echo $img_src; ?>' alt='No Image Available' onerror= 'this.src="./uploads/defaultIcon.png";' /> </div>
                             <div class='col-sm-3'><span class='asked_by'>asked by </span><a href='profile.php?uname=<?php echo htmlentities($row['qnd_user']) ?>'> <?php echo htmlentities($row['qnd_user']) ?> </a>
                                 <br>
                                 <span class='asked_by'>User Score - <?php echo $score; ?></span>
@@ -146,7 +159,15 @@
                     </div>
                     <br><br>
                     <div class='row'>
-                        <div class='col-sm-1 col-sm-offset-8'><img width='60' height='60' src='<?php echo $img_src; ?>' alt='No Image Available' onerror= 'this.src="./uploads/defaultIcon.png";' /> </div>
+                        <div class='col-sm-3'></div>
+                        <div class='col-sm-5'><?php 
+                            $pieces = explode(" ", $row['tags']);
+                            foreach($pieces as $v){ ?>
+                            <a href='tags.php?tag=<?php echo $v ?>'> <?php echo $v." "; ?> </a>
+                            
+                            <?php }
+                        ?></div>
+                        <div class='col-sm-1'><img width='60' height='60' src='<?php echo $img_src; ?>' alt='No Image Available' onerror= 'this.src="./uploads/defaultIcon.png";' /> </div>
                             <div class='col-sm-3'><span class='asked_by'>asked by </span><a href='profile.php?uname=<?php echo htmlentities($row['qnd_user']) ?>'> <?php echo htmlentities($row['qnd_user']) ?> </a>
                                 <br>
                                 <span class='asked_by'>User Score - <?php echo $score; ?></span>
@@ -259,6 +280,7 @@
                     
                     $score = $row_user['score'];
                     
+                    if($row_user['git_user'] == 0) { 
                     if($row_user['grav_override'] == 1) { 
             
                         $img_src = "uploads/".$row_user['pic_name'];    
@@ -279,7 +301,11 @@
 
                             $img_src = "uploads/".$row_user['pic_name'];
                          } 
+                    }}
+                    else {
+                    $img_src = 'https://github.com/'.$row_user['user_name'].'.png';
                     }
+                    
                     
                     $aupid = "$acount"."u";
                     $adownid = "$acount"."d";

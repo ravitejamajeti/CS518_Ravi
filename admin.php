@@ -54,6 +54,7 @@
         if($result = mysqli_query($link, $query)){
             while($row = mysqli_fetch_array($result)) {
                 
+                if($row['git_user'] == 0) {  
                 if($row['grav_override'] == 1) { 
             
                     $img_src = "uploads/".$row['pic_name'];    
@@ -74,7 +75,10 @@
 
                         $img_src = "uploads/".$row['pic_name'];
                     } 
-                }
+                }}
+                else {
+                            $img_src = 'https://github.com/'.$row['user_name'].'.png';
+                        }
         
                 $query1 = "select count(qid) from questions where qnd_user = '".$row['user_name']."'";
                 $result1 = mysqli_query($link, $query1);

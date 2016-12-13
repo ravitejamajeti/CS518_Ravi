@@ -85,7 +85,7 @@
                         //$rows[] = $row;
                         
                             
-                    
+                        if($row1['git_user'] == 0) {  
                         if($row1['grav_override'] == 1) { 
             
                             $img_src = "uploads/".$row1['pic_name'];    
@@ -106,6 +106,9 @@
                             
                                 $img_src = "uploads/".$row1['pic_name'];
                              } 
+                        }}
+                        else {
+                            $img_src = 'https://github.com/'.$row1['user_name'].'.png';
                         }
                     ?>
                     
@@ -127,7 +130,7 @@
                         <br><br>
                         <div class='row'>
                             <div class='col-sm-3'></div>
-                        <div class='col-sm-5'><?php 
+                        <div class='col-sm-5'>Tags : <?php 
                             $pieces = explode(" ", $row['tags']);
                             foreach($pieces as $v){ ?>
                             <a href='tags.php?tag=<?php echo $v ?>'> <?php echo $v." "; ?> </a>

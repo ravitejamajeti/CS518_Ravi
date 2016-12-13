@@ -31,6 +31,7 @@
                         $result1 = mysqli_query($link, $query1);
                         $row1 = mysqli_fetch_array($result1);
                         
+                        if($row1['git_user'] == 0) {
                         if($row1['grav_override'] == 1) { 
             
                             $img_src = "uploads/".$row1['pic_name'];    
@@ -51,6 +52,9 @@
                             
                                 $img_src = "uploads/".$row1['pic_name'];
                              } 
+                        }}
+                        else {
+                            $img_src = 'https://github.com/'.$row1['user_name'].'.png';
                         }
             ?>
                     
@@ -71,7 +75,15 @@
                         </div>
                         <br><br>
                         <div class='row'>
-                        <div class='col-sm-1 col-sm-offset-8'><img width='60' height='60' src='<?php echo $img_src; ?>' alt='No Image Available' onerror= 'this.src="./uploads/defaultIcon.png";' /> </div>
+                            <div class='col-sm-3'></div>
+                        <div class='col-sm-5'>Tags : <?php 
+                            $pieces = explode(" ", $row['tags']);
+                            foreach($pieces as $v){ ?>
+                            <a href='tags.php?tag=<?php echo $v ?>'> <?php echo $v." "; ?> </a>
+                            
+                            <?php }
+                        ?></div>
+                        <div class='col-sm-1'><img width='60' height='60' src='<?php echo $img_src; ?>' alt='No Image Available' onerror= 'this.src="./uploads/defaultIcon.png";' /> </div>
                             <div class='col-sm-3'><span class='asked_by'>asked by </span><a href='profile.php?uname=<?php echo htmlentities($row['qnd_user']) ?>'> <?php echo htmlentities($row['qnd_user']) ?> </a><br><span class='asked_by'>User Score - <?php echo $row1['score']; ?></span ><br><span class='asked_by'><i class='fa fa-clock-o' aria-hidden='true'></i> on <?php echo htmlentities($row['q_created']) ?></span></div>
                         </div>
                         <hr>

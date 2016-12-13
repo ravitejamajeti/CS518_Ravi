@@ -71,7 +71,7 @@
                         $result = mysqli_query($link, $query);
                         $row = mysqli_fetch_array($result);
                         
-                            
+                        if($row['git_user'] == 0) {  
                     
                         if($row['grav_override'] == 1) { ?>
                     
@@ -90,12 +90,21 @@
                             <?php } 
                             else { ?>
                                 <img width='100' height='100' src='./uploads/<?php echo $row['pic_name']; ?>' alt='No Image Available' onerror= 'this.src="./uploads/defaultIcon.png";' /> 
-                        <?php } } ?>
+                        <?php } } }
+                    else{
+                        
+                        ?> 
+                        <img width='100' height='100' src='https://github.com/<?php echo $row['user_name'].".png"; ?>' alt='No Image Available' /> 
+                    
+                        <?php
+                    }
+                        
+                    ?>
                     
                     
                     <br><br>
                     <?php if (isset($_SESSION['username'])) { 
-                            if($_SESSION['username'] == $_GET['uname']) {?>
+                            if($_SESSION['username'] == $_GET['uname'] && $_SESSION['gitvar'] == 0) {?>
                                 <form method="post" enctype="multipart/form-data">
                                     <input type="file" name="file">
                                     <input type="submit" name="submit">
@@ -150,7 +159,15 @@
                         </div>
                         <br><br>
                         <div class="row">
-                        <div class="col-sm-4 col-sm-offset-8"><span class="asked_by"><i class="fa fa-user" aria-hidden="true"></i> asked by </span><a href=""> <?php echo $row['qnd_user'];  ?></a></div>
+                        <div class='col-sm-3'></div>
+                        <div class='col-sm-5'>Tags : <?php 
+                            $pieces = explode(" ", $row['tags']);
+                            foreach($pieces as $v){ ?>
+                            <a href='tags.php?tag=<?php echo $v ?>'> <?php echo $v." "; ?> </a>
+                            
+                            <?php }
+                        ?></div>
+                        <div class="col-sm-4"><span class="asked_by"><i class="fa fa-user" aria-hidden="true"></i> asked by </span><a href=""> <?php echo $row['qnd_user'];  ?></a></div>
                         </div>
                         <div class="row">
                         <div class="col-sm-4 col-sm-offset-8 asked_by"><span class="asked_by"><i class="fa fa-clock-o" aria-hidden="true"></i> on </span>

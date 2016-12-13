@@ -219,6 +219,7 @@ hr{
                         $_SESSION['username'] = $_POST['loginid'];
                         $_SESSION['uid'] = $row['uid'];
                         $_SESSION['role'] = $row['role'];
+                        $_SESSION["gitvar"]=$row["git_user"];
                         $user = true;
                         ?> <script> location.replace("index.php"); </script> 
              <?php  }
@@ -250,6 +251,7 @@ hr{
                 <div class="g-recaptcha" data-sitekey="6LeDAA4UAAAAAPieR3psL5uhXdFGzxiF4JU2xJ_1"></div>
                 <br>
                 <button class="btn btn-lg btn-primary" type="submit">Login</button>
+                <center> <p> <a href="https://github.com/login/oauth/authorize?scope=user:email&client_id=453aef7beb615c7cef32">Login with Github </a></p> </center>
                 <br>
                 <?php
                 if($invalid == false) {
