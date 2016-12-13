@@ -4,7 +4,7 @@
         
         include 'config.php';
 
-        $query = "SELECT distinct(country) FROM questions,users WHERE TIMESTAMPDIFF(SECOND, q_created, NOW()) < 10 and qnd_user = user_name";
+        $query = "SELECT distinct(country) FROM questions,users WHERE TIMESTAMPDIFF(SECOND, q_created, NOW()) < 30 and qnd_user = user_name";
             
         $result = mysqli_query($link, $query);
             

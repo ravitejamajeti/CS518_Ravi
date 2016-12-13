@@ -23,7 +23,12 @@
                 $query = "SELECT * from questions, answers where answers.qid = questions.qid and answered_user = '".mysqli_real_escape_string($link, $_SESSION['username'])."'";
             
                 if($result = mysqli_query($link, $query)) {
-                    while($row = mysqli_fetch_array($result)) { ?>
+                    while($row = mysqli_fetch_array($result)) { 
+            
+                        $query_answers = "SELECT count(*) from answers where qid = '".$row['qid']."'";
+                        $result_answers = mysqli_query($link, $query_answers);
+                        $row_answers = mysqli_fetch_array($result_answers);
+                ?>
                     
                         <div class='row'>
                         <div class ='col-md-1'>
@@ -36,7 +41,7 @@
                         </div>
                         <div class ='col-md-1'>
                         <span style="background-color: #4682B4; color:white; text-align: center;  border-radius: 3px; box-shadow: 0 0 6px #ccc;">Answers</span><br>
-                        <span style="position:relative; left:10px;"> <?php echo $row['views']; ?></span>
+                        <span style="position:relative; left:10px;"> <?php echo $row_answers[0]; ?></span>
                         </div>
                         <a href="display_question.php?qid= <?php echo $row['qid']; ?> "rel="tooltip" data-html="true" title = "" onmouseover="answer_tooltip(this.id)" class = "question_hyperlink col-md-9 red-tooltip" id = "<?php echo $row['qid']; ?>" > <?php echo htmlentities($row['question_title']); ?></a>
                         </div>

@@ -116,11 +116,11 @@
                     <hr style="width:50%">
                     <div class='row'>
                         <?php if($upvote == 0 && $downvote == 0) { ?>
-                        <span class='col-sm-1'><i class='fa fa-star-o fa-2x' aria-hidden='true'></i><br><br><i class='fa fa-2x fa-arrow-circle-o-up' aria-hidden='true' data-vote_type = 'uq' data-voted = '<?php echo $upvote; ?>' onclick='changevote(this)'></i><br><span id="qvotes"><?php echo $row['votes']; ?></span><br><i class='fa fa-2x fa-arrow-circle-o-down' aria-hidden='true' data-vote_type = 'dq' data-voted = '<?php echo $downvote; ?>' onclick='changevote(this)'></i></span>
+                        <span class='col-sm-1'><i class='fa fa-2x fa-arrow-circle-o-up' aria-hidden='true' data-vote_type = 'uq' data-voted = '<?php echo $upvote; ?>' onclick='changevote(this)'></i><br><span id="qvotes"><?php echo $row['votes']; ?></span><br><i class='fa fa-2x fa-arrow-circle-o-down' aria-hidden='true' data-vote_type = 'dq' data-voted = '<?php echo $downvote; ?>' onclick='changevote(this)'></i></span>
                         <?php } else if($upvote == 1 && $downvote == 0) { ?>
-                        <span class='col-sm-1'><i class='fa fa-star-o fa-2x' aria-hidden='true'></i><br><br><i class='fa fa-2x fa-arrow-circle-o-up green' aria-hidden='true' data-vote_type = 'uq' data-voted = '<?php echo $upvote; ?>' onclick='changevote(this)'></i><br><span id="qvotes"><?php echo $row['votes']; ?></span><br><i class='fa fa-2x fa-arrow-circle-o-down' aria-hidden='true' data-vote_type = 'dq' data-voted = '<?php echo $downvote; ?>' onclick='changevote(this)'></i></span>
+                        <span class='col-sm-1'><i class='fa fa-2x fa-arrow-circle-o-up green' aria-hidden='true' data-vote_type = 'uq' data-voted = '<?php echo $upvote; ?>' onclick='changevote(this)'></i><br><span id="qvotes"><?php echo $row['votes']; ?></span><br><i class='fa fa-2x fa-arrow-circle-o-down' aria-hidden='true' data-vote_type = 'dq' data-voted = '<?php echo $downvote; ?>' onclick='changevote(this)'></i></span>
                         <?php } else if($upvote == 0 && $downvote == 1) { ?>
-                        <span class='col-sm-1'><i class='fa fa-star-o fa-2x' aria-hidden='true'></i><br><br><i class='fa fa-2x fa-arrow-circle-o-up' aria-hidden='true' data-vote_type = 'uq' data-voted = '<?php echo $upvote; ?>' onclick='changevote(this)'></i><br><span id="qvotes"><?php echo $row['votes']; ?></span><br><i class='fa fa-2x fa-arrow-circle-o-down green' aria-hidden='true' data-vote_type = 'dq' data-voted = '<?php echo $downvote; ?>' onclick='changevote(this)'></i></span>
+                        <span class='col-sm-1'><i class='fa fa-2x fa-arrow-circle-o-up' aria-hidden='true' data-vote_type = 'uq' data-voted = '<?php echo $upvote; ?>' onclick='changevote(this)'></i><br><span id="qvotes"><?php echo $row['votes']; ?></span><br><i class='fa fa-2x fa-arrow-circle-o-down green' aria-hidden='true' data-vote_type = 'dq' data-voted = '<?php echo $downvote; ?>' onclick='changevote(this)'></i></span>
                         <?php } ?>
                     <div class='col-sm-11'> <?php echo $row['question']; ?> </div>
                     </div>
@@ -511,6 +511,39 @@
                 }
             }
         ?>
+            <?php
+                        $query_ansimg = "select * from users where user_name = '".$_SESSION['username']."'";
+                        $result_ansimg = mysqli_query($link, $query_ansimg);
+                        $row_ansimg = mysqli_fetch_array($result_ansimg);
+                        
+                        if($row_ansimg['git_user'] == 0) {  
+                        if($row_ansimg['grav_override'] == 1) { 
+            
+                            $img_src = "uploads/".$row_ansimg['pic_name'];    
+                        } 
+                        else { 
+                    
+                            $gravcheck = "http://www.gravatar.com/avatar/".md5( strtolower( trim( $row_ansimg['email'] ) ) )."?d=404";
+                    
+                            $response = get_headers($gravcheck);
+                            
+                            
+                            
+                            if ($response[0] != "HTTP/1.1 404 Not Found"){ 
+                            
+                                $img_src = "https://www.gravatar.com/avatar/".md5( strtolower( trim( $row_ansimg['email'] ) ) );
+                            } 
+                            else { 
+                            
+                                $img_src = "uploads/".$row_ansimg['pic_name'];
+                             } 
+                        }}
+                        else {
+                            $img_src = 'https://github.com/'.$row_ansimg['user_name'].'.png';
+                        }
+            
+            //echo $img_src;
+            ?>
         </div>
         
         <br>
@@ -890,16 +923,17 @@ var bbcodeParser = new BBCodeHTML();       // creates object instance of BBCodeH
                         if(response){
                             var qnd_user =  "<?php echo $qnd_user; ?>";
                             var session_user =  "<?php echo $_SESSION['username']; ?>";
+                            var img_src =  "<?php echo $img_src; ?>";
                             
                             console.log(response['aid'])
                             
                             def = './uploads/defaultIcon.png";'
 
                             if(qnd_user == session_user) {
-                                iDiv.innerHTML = "<div class='row'><span class='col-sm-1'><i id = "+response['aid']+" class='fa fa-check fa-2x' aria-hidden='true' onclick='changetick(this.id)'></i><br><br><i class='fa fa-2x fa-arrow-circle-o-up' aria-hidden='true'></i><br>0<br><i class='fa fa-2x fa-arrow-circle-o-down' aria-hidden='true'></i></span><span class='col-sm-11'>"+bbcodeParser.bbcodeToHtml(answer)+"</div><br><br><div class='row'><div class='col-sm-1 col-sm-offset-8'><img width='60' height='45' src='./uploads/"+htmlEntities(response['username'])+"' alt='No Image Available' onerror = 'this.src="+def+"' /></div><div class='col-sm-3'><span class='asked_by'>answered by <a href=''>"+htmlEntities(response['username'])+"</a></span><br><span class='asked_by'><i class='fa fa-clock-o' aria-hidden='true'></i> now </span></div></div><hr style='width:50%'>"
+                                iDiv.innerHTML = "<div class='row'><span class='col-sm-1'><i id = "+response['aid']+" class='fa fa-check fa-2x' aria-hidden='true' onclick='changetick(this.id)'></i><br><br><i class='fa fa-2x fa-arrow-circle-o-up' aria-hidden='true'></i><br>0<br><i class='fa fa-2x fa-arrow-circle-o-down' aria-hidden='true'></i></span><span class='col-sm-11'>"+bbcodeParser.bbcodeToHtml(answer)+"</div><br><br><div class='row'><div class='col-sm-1 col-sm-offset-8'><img width='60' height='60' src='"+img_src+"' alt='No Image Available' onerror = 'this.src="+def+"' /></div><div class='col-sm-3'><span class='asked_by'>answered by <a href=''>"+htmlEntities(response['username'])+"</a></span><br><span class='asked_by'><i class='fa fa-clock-o' aria-hidden='true'></i> now </span></div></div><hr style='width:50%'>"
                             }
                             else {
-                                iDiv.innerHTML = "<div class='row'><span class = 'disp_none'><i id = "+response['aid']+" class='fa fa-check fa-2x col-sm-1' aria-hidden='true' onclick='changetick(this.id)'></i></span><span class='col-sm-1'><i class='fa fa-2x fa-arrow-circle-o-up' aria-hidden='true'></i><br>0<br><i class='fa fa-2x fa-arrow-circle-o-down' aria-hidden='true'></i></span><span class='col-sm-11'>"+bbcodeParser.bbcodeToHtml(answer)+"</div><br><br><div class='row'><div class='col-sm-1 col-sm-offset-8'><img width='60' height='45' src='./uploads/"+htmlEntities(response['username'])+"' alt='No Image Available' onerror = 'this.src="+def+"' /></div><div class='col-sm-3'><span class='asked_by'>answered by <a href=''>"+htmlEntities(response['username'])+"</a></span><br><span class='asked_by'><i class='fa fa-clock-o' aria-hidden='true'></i> now </span></div></div><hr style='width:50%'>"
+                                iDiv.innerHTML = "<div class='row'><span class = 'disp_none'><i id = "+response['aid']+" class='fa fa-check fa-2x col-sm-1' aria-hidden='true' onclick='changetick(this.id)'></i></span><span class='col-sm-1'><i class='fa fa-2x fa-arrow-circle-o-up' aria-hidden='true'></i><br>0<br><i class='fa fa-2x fa-arrow-circle-o-down' aria-hidden='true'></i></span><span class='col-sm-11'>"+bbcodeParser.bbcodeToHtml(answer)+"</div><br><br><div class='row'><div class='col-sm-1 col-sm-offset-8'><img width='60' height='60' src='"+img_src+"' alt='No Image Available' onerror = 'this.src="+def+"' /></div><div class='col-sm-3'><span class='asked_by'>answered by <a href=''>"+htmlEntities(response['username'])+"</a></span><br><span class='asked_by'><i class='fa fa-clock-o' aria-hidden='true'></i> now </span></div></div><hr style='width:50%'>"
                             }
                         }
                     }, 'json');
