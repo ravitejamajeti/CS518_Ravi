@@ -229,7 +229,7 @@ hr{
                     $invalid = "1";
                 }
                 else {
-                    $query = "INSERT INTO users (user_name, password,email) VALUES ('".mysqli_real_escape_string($link, $_POST['username'])."', '".mysqli_real_escape_string($link, $_POST['create_password'])."','".mysqli_real_escape_string($link, $_POST['email'])."')";
+                    $query = "INSERT INTO users (user_name, password,email,country) VALUES ('".mysqli_real_escape_string($link, $_POST['username'])."', '".mysqli_real_escape_string($link, $_POST['create_password'])."','".mysqli_real_escape_string($link, $_POST['email'])."','".mysqli_real_escape_string($link, $_POST['country'])."')";
                     
                     mysqli_query($link, $query);
                     
@@ -255,6 +255,8 @@ hr{
                 <input type="password" id="inputPassword" class="login_box" placeholder="******" name="confirm_password" required>
                 <p class="input_title">Email</p>
                 <input type="text" id="inputEmail" class="login_box" placeholder="email_id@abc.com" name="email" required>
+                <p class="input_title">Country</p>
+                <input type="text" id="country" class="login_box" placeholder="country" name="country" required>
                 <div id="remember" class="checkbox">
                     <label>
                         

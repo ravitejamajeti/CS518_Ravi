@@ -48,15 +48,10 @@ if(isset($_GET['code']))
             $email_id = $email_data[0]['email'];
             $email_primary = $email_data[0]['primary'];
             $email_verified = $email_data[0]['verified'];
-        
-          // $_SESSION["username"]=$username1;
     
             $query = mysqli_query($link,"SELECT * FROM users WHERE user_name = '$username1' limit 1");  
             
-            //$queryy = mysqli_query($conn,"INSERT INTO asker (gitv) VALUES (1)");
-            //$somearray[] = $query;
-    
-            //echo $query["username"];
+            
             if(mysqli_num_rows($query)==1)
             {
                 //echo "hello";
@@ -75,7 +70,7 @@ if(isset($_GET['code']))
             }
             else
             {
-            $query1= "INSERT INTO users (user_name, email, password, git_user) VALUES ('$username1','$email_id','password123',1)";
+            $query1= "INSERT INTO users (user_name, email, password, git_user, country) VALUES ('$username1','$email_id','password123',1,'India')";
                 $result = mysqli_query($link,$query1);
                 $query2 = mysqli_query($link,"SELECT * FROM users WHERE user_name = '$username1' limit 1");
                

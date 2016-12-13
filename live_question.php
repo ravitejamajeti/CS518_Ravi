@@ -21,7 +21,7 @@
 
             <?php
             
-                $query = "SELECT * FROM questions,users WHERE TIMESTAMPDIFF(SECOND, q_created, NOW()) < 30 and qnd_user = user_name and country = '".$_GET['cname']."'";
+                $query = "SELECT * FROM questions,users WHERE TIMESTAMPDIFF(SECOND, q_created, NOW()) < 300 and qnd_user = user_name and country = '".$_GET['cname']."'";
             
                 //$query = "SELECT * from questions order by qid desc";
             
